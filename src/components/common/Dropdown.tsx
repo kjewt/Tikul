@@ -1,22 +1,24 @@
 import { useState } from 'react';
-import { RiArrowDropDownLine } from 'react-icons/ri';
+import { FaChevronDown } from "react-icons/fa";
+// import { useRecoilState } from 'recoil';
+// import { bankNameState, transferBankNameState } from '../../state/atoms';
 
-export const Dropdown = (props: { width: string }): JSX.Element => {
-    // width로 넓이를 지정할 수 있습니다. ex) w-52, w-full
-    const [selectedItem, setSelectedItem] = useState('');
+
+const DropDown = (): JSX.Element => {
+    const [selectedBank, setSelectedBank] = useState<string>("");
     const [isOpen, setIsOpen] = useState(false);
-
-    //예시 자료입니다.
-    const officeList = {
-        더공간A: ["1인실", "2인실", "3인실"],
-        더공간B: "2인실",
-        더공간C: "3인실",
-        더공간D: "4인실",
-    };
+    const bankNames = ['NH농협', 'KB국민', '신한', '우리', 'IBK기업', '하나', '새마을금고', '카카오뱅크', '토스뱅크', '케이뱅크', '부산', '대구', '신협', 'SC제일', '씨티'];
 
     const handleItemClick = (item: string) => {
-        setSelectedItem(item);
+        setSelectedBank(item);
         setIsOpen(false);
+
+        // if (props) {
+        //     // setTransferBankName(item);
+        // }
+        // if (props === false) {
+        //     // setBankName(item);
+        // }
     };
 
     const toggleDropDown = () => {
@@ -25,31 +27,32 @@ export const Dropdown = (props: { width: string }): JSX.Element => {
 
     return (
         <>
-            <div className={`form-control  ${props.width}`}>
-                <div className="dropdown">
-                    <label tabIndex={0} className="group btn btn-primary btn-outline justify-between w-full hover:" onClick={toggleDropDown}>
-                        <span className="label-text group-hover:text-white">{selectedItem}</span>
-                        <RiArrowDropDownLine className="text-2xl" />
+            {/* 은행선택 드롭다운 */}
+            <div className="form-control">
+                <label className="label">
+                    <span className="label-text">은행 선택</span>
+                </label>
+                <div className="dropdown" >
+                    <label tabIndex={0} className="btn btn-outline btn-primary justify-between text-accent w-full" onClick={toggleDropDown}>
+                        {selectedBank === "" ?
+                            <span className="label-text text-accent text-base">은행을 선택하세요.</span> :
+                            <span className="label-text">{selectedBank}</span>
+                        }
+                        <FaChevronDown />
                     </label>
-                    <ul tabIndex={0} className={`dropdown-content w-full z-[1] menu p-2 shadow bg-base-100 rounded-box ${isOpen ? '' : 'hidden'}`}>
-                        {Object.entries(officeList).map(([officeName, roomList], index) => (
-                            <li key={index}>
-                                {Array.isArray(roomList) ? (
-                                    roomList.map((room, roomIndex) => (
-                                        <a key={roomIndex} onClick={() => handleItemClick(`${officeName} ${room}`)}>
-                                            {`${officeName} ${room}`}
-                                        </a>
-                                    ))
-                                ) : (
-                                    <a onClick={() => handleItemClick(`${officeName} ${roomList}`)}>
-                                        {`${officeName} ${roomList}`}
-                                    </a>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
+                    {isOpen &&
+                        (<ul tabIndex={0} className={`dropdown-content grid grid-cols-2 w-full z-[1] menu p-2 shadow bg-base-100 rounded-box`}>
+                            {bankNames.map((bankName, index) => (
+                                <li key={index}>
+                                    <a onClick={() => handleItemClick(bankName)}>{bankName}</a>
+                                </li>
+                            ))}
+                        </ul>)}
+
                 </div>
             </div>
         </>
     );
 };
+
+export default DropDown;
