@@ -15,10 +15,25 @@ export type CbxProps = {
   onCbxChange: (value: boolean) => void;
 };
 
-//atom 타입
-type commonType = string | null;
+export type NameProps = {
+  onNameChange: (childValue: ChildrenValue) => void;
+};
 
-export type AccountData = {
+export type AccountProps = {
+  onAccountChange: (childValue: ChildrenValue) => void;
+};
+export type AccountPWProps = {
+  onAccountPWChange: (childValue: ChildrenValue) => void;
+};
+
+export type BankProps = {
+  onBankChange: (childValue: ChildrenValue) => void;
+};
+
+//atom 타입
+export type commonType = string | null;
+
+export type AccountDataType = {
   IsRegister: boolean;
   account: commonType;
   accountPW: commonType;

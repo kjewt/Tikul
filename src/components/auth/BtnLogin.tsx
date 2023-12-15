@@ -16,16 +16,13 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
             await signInWithEmailAndPassword(firebaseAuth, email, password);
             const updatedUser = firebaseAuth.currentUser;
 
-            console.log("로그인 중인 아이디", email);
-            console.log('로그인 성공!');
-
             if (updatedUser) {
                 const userRef = doc(db, "users", updatedUser.uid);
                 getDoc(userRef).then((doc: any) => {
                     if (doc.exists) {
                         setAccountData(doc.data());
                         localStorage.setItem('account', JSON.stringify(doc.data()));
-                        localStorage.setItem('uid', JSON.stringify(updatedUser.uid));
+                        localStorage.setItem('uid', updatedUser.uid);
                         console.log(doc.data());
                         navigate('/Home');
                     } else {

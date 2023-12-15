@@ -1,24 +1,17 @@
 import { useState } from 'react';
 import { FaChevronDown } from "react-icons/fa";
-// import { useRecoilState } from 'recoil';
-// import { bankNameState, transferBankNameState } from '../../state/atoms';
+import { BankProps } from '../../types/authTypes';
 
-
-const DropDown = (): JSX.Element => {
+export const Bank = ({ onBankChange }: BankProps): JSX.Element => {
     const [selectedBank, setSelectedBank] = useState<string>("");
     const [isOpen, setIsOpen] = useState(false);
     const bankNames = ['NH농협', 'KB국민', '신한', '우리', 'IBK기업', '하나', '새마을금고', '카카오뱅크', '토스뱅크', '케이뱅크', '부산', '대구', '신협', 'SC제일', '씨티'];
 
     const handleItemClick = (item: string) => {
         setSelectedBank(item);
+        onBankChange({ value: item, valid: true })
         setIsOpen(false);
 
-        // if (props) {
-        //     // setTransferBankName(item);
-        // }
-        // if (props === false) {
-        //     // setBankName(item);
-        // }
     };
 
     const toggleDropDown = () => {
@@ -55,4 +48,3 @@ const DropDown = (): JSX.Element => {
     );
 };
 
-export default DropDown;

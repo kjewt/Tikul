@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { AccountValid } from '../../business/valid/AccountValid';
-// import { useRecoilState } from 'recoil';
-// import { accountState, isAccountState } from '../../state/atoms';
+import type { AccountProps } from '../../types/authTypes';
 
 
-export const Account = (): JSX.Element => {
+export const Account = ({ onAccountChange }: AccountProps): JSX.Element => {
     const [account, setAccount] = useState("");
     const isValid = AccountValid(account)
     const isError = !isValid && (account !== "")
@@ -12,7 +11,7 @@ export const Account = (): JSX.Element => {
     const handleAccountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const userAccount = event.target.value.replace(/\s/g, '').slice(0, 13);
         setAccount(userAccount)
-
+        onAccountChange({ value: userAccount, valid: AccountValid(userAccount) })
     };
 
 

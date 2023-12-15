@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logout } from '../../business/Logout';
 import { useRecoilState } from 'recoil';
@@ -9,6 +9,7 @@ import { initialAccountData } from '../../state/staticData';
 export const NavBar = () => {
     const navigate = useNavigate();
     const [accountData, setAccountData] = useRecoilState(accountDataState)
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         const storedAccountData = localStorage.getItem('account');
@@ -45,16 +46,15 @@ export const NavBar = () => {
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
-                        <li><a>Link</a></li>
                         <li>
                             <details>
                                 <summary>
                                     {accountData && (accountData.name ? accountData.name : accountData.email)}
                                 </summary>
-                                <ul className="p-2 bg-base-100 rounded-t-none w-32">
-                                    <li><Link to="/setting">설정</Link></li>
+                                {isOpen && <ul className="p-2 bg-base-100 rounded-t-none w-32">
+                                    <li><Link to="/setting" onClick={(prev) => setIsOpen(!prev)}>설정</Link></li>
                                     <li><div onClick={handleLogout}>로그아웃</div></li>
-                                </ul>
+                                </ul>}
                             </details>
                         </li>
                     </ul>

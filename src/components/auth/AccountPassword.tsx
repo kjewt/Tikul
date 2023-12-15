@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { AccountPwValid } from '../../business/valid/AccountPwValid';
 import { PwDoubleCheckValid } from '../../business/valid/PwDoubleCheckValid';
+import { AccountPWProps } from '../../types/authTypes';
 
 
 
-export const AccountPassword = (): JSX.Element => {
+export const AccountPassword = ({ onAccountPWChange }: AccountPWProps): JSX.Element => {
     const [accountPassword, setAccountPassword] = useState<string>("")
     const [comparingPassword, setComparingPassword] = useState<string>("")
 
@@ -15,11 +16,13 @@ export const AccountPassword = (): JSX.Element => {
         const pw = event.target.value.replace(/\D/g, '').slice(0, 6);
         setAccountPassword(pw)
 
+
     };
 
     const handleAccountPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const pw = event.target.value.replace(/\D/g, '').slice(0, 6);
         setComparingPassword(pw)
+        onAccountPWChange({ value: pw, valid: PwDoubleCheckValid(accountPassword, pw) })
     };
 
     return (
@@ -54,9 +57,7 @@ export const AccountPassword = (): JSX.Element => {
                 />
             </div>
 
-            <div className="flex items-center justify-around">
-                <hr className="w-full mt-6"></hr>
-            </div>
+
         </>
     );
 };
