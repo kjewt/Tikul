@@ -1,6 +1,6 @@
-import type {AccountData} from "../types/authTypes";
+import type {AccountDataType} from "../types/authTypes";
 
-export const initialAccountData: AccountData = {
+export const initialAccountData: AccountDataType = {
   IsRegister: false,
   account: null,
   accountPW: null,

@@ -5,7 +5,7 @@ import { AccountPWProps } from '../../types/authTypes';
 
 
 
-export const AccountPassword = ({ onAccountPWChange }: AccountPWProps): JSX.Element => {
+export const AccountPWCheck = ({ onAccountPWChange }: AccountPWProps): JSX.Element => {
     const [accountPassword, setAccountPassword] = useState<string>("")
     const [comparingPassword, setComparingPassword] = useState<string>("")
 

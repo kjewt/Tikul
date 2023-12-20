@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PwlValid } from '../../business/valid/PwValid'
+import { PwValid } from '../../business/valid/PwValid'
 import { PwDoubleCheckValid } from '../../business/valid/PwDoubleCheckValid'
 import { PasswordProps } from '../../types/authTypes';
 
@@ -7,7 +7,7 @@ export const PasswordCheck = ({ onPasswordChange }: PasswordProps): JSX.Element 
     const [password, setPassword] = useState<string>("")
     const [comparingPassword, setComparingPassword] = useState<string>("")
 
-    const isValid = PwlValid(password)
+    const isValid = PwValid(password)
     const isSame = PwDoubleCheckValid(password, comparingPassword)
     const isError = !(isValid || (password === ""))
 

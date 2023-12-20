@@ -1,7 +1,7 @@
 import {atom} from "recoil";
-import type {AccountData} from "../types/authTypes";
+import type {AccountDataType} from "../types/authTypes";
 
-export const accountDataState = atom<AccountData>({
+export const accountDataState = atom<AccountDataType>({
   key: "accountDataState",
   default: {
     IsRegister: false,

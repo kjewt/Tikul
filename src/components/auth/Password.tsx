@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PwValid } from '../../business/valid/PwValid';
 import { PasswordProps } from '../../types/authTypes';
 
 export const Password = ({ onPasswordChange }: PasswordProps): JSX.Element => {
@@ -7,7 +8,7 @@ export const Password = ({ onPasswordChange }: PasswordProps): JSX.Element => {
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newPassword = event.target.value
         setPassword(newPassword);
-        onPasswordChange({ value: newPassword, valid: true })
+        onPasswordChange({ value: newPassword, valid: PwValid(newPassword) })
     };
 
 

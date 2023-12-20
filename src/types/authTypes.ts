@@ -42,3 +42,10 @@ export type AccountDataType = {
   email: commonType;
   name: commonType;
 };
+
+//setting
+
+export type PropsType = {
+  onAccountPWChange: AccountPWProps;
+  width: string;
+};

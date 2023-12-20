@@ -1,14 +1,18 @@
 import { useRef } from "react";
-import { useRecoilState } from 'recoil';
-import { accountDataState } from '../../state/atoms';
+
 import { TbHandClick } from "react-icons/tb";
 import styled from 'styled-components';
+import type { commonType } from "../../types/authTypes";
 
+type PropsType = {
+    name: commonType
+    bank: commonType,
+    balance: number,
+    account: commonType,
+}
 
-
-export const CardSection = () => {
+export const CardSection = ({ name, bank, balance, account }: PropsType) => {
     const card = useRef<HTMLDivElement | null>(null);
-    const [accountData] = useRecoilState(accountDataState);
 
     const cardClick = () => {
         const elem = card.current;
@@ -35,19 +39,19 @@ export const CardSection = () => {
                             <tbody>
                                 <tr>
                                     <th>예금주</th>
-                                    <td className="text-base font-bold">{accountData.name}</td>
+                                    <td className="text-base font-bold">{name}</td>
                                 </tr>
                                 <tr>
                                     <th>은행</th>
-                                    <td className="text-base font-bold">{accountData.bank}</td>
+                                    <td className="text-base font-bold">{bank}</td>
                                 </tr>
                                 <tr>
                                     <th>계좌번호</th>
-                                    <td className="text-base font-bold">{accountData.account}</td>
+                                    <td className="text-base font-bold">{account}</td>
                                 </tr>
                                 <tr>
                                     <th>잔액</th>
-                                    <td className="text-base font-bold">{accountData.balance}원</td>
+                                    <td className="text-base font-bold">{balance}원</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -9,7 +9,7 @@ import { initialAccountData } from '../../state/staticData';
 export const NavBar = () => {
     const navigate = useNavigate();
     const [accountData, setAccountData] = useRecoilState(accountDataState)
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
         const storedAccountData = localStorage.getItem('account');
