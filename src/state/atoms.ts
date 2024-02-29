@@ -1,5 +1,5 @@
 import {atom} from "recoil";
-import type {AccountDataType} from "../types/authTypes";
+import type {AccountDataType} from "../types/Types";
 
 export const accountDataState = atom<AccountDataType>({
   key: "accountDataState",
@@ -12,36 +12,6 @@ export const accountDataState = atom<AccountDataType>({
     email: null,
     name: null,
   },
-});
-
-export const transactionsState = atom<any[]>({
-  key: "transactionsState",
-  default: [],
-});
-
-export const emailState = atom<string>({
-  key: "emailState", // unique ID (with respect to other atoms/selectors)
-  default: "", // default value (aka initial value)
-});
-
-export const passwordState = atom<string>({
-  key: "passwordState", // unique ID (with respect to other atoms/selectors)
-  default: "", // default value (aka initial value)
-});
-
-export const bankNameState = atom({
-  key: "bankNameState", // unique ID (with respect to other atoms/selectors)
-  default: "", // default value (aka initial value)
-});
-
-export const accountState = atom({
-  key: "accountState", // unique ID (with respect to other atoms/selectors)
-  default: "", // default value (aka initial value)
-});
-
-export const accountPasswordState = atom({
-  key: "accountPasswordState",
-  default: "",
 });
 
 // for Join

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { AccountPwValid } from '../../business/valid/AccountPwValid';
-import { ChildrenValue } from '../../types/authTypes';
+import { ChildrenValue } from '../../types/Types';
 
 type PropsType = {
     onAccountPWChange: (childValue: ChildrenValue) => void;
-    width: string;
+    width?: string;
 };
 
 

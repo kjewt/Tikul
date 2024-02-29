@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { InputInfo } from "./InputInfo";
 import { AccountPW } from "../auth/AccountPW";
-import type { ChildrenValue, commonType } from "../../types/authTypes";
+import type { ChildrenValue, commonType } from "../../types/Types";
 
 type pwType = {
     pw: commonType

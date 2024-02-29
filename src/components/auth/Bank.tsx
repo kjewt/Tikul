@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaChevronDown } from "react-icons/fa";
-import { BankProps } from '../../types/authTypes';
+import { BankProps } from '../../types/Types';
 
 export const Bank = ({ onBankChange }: BankProps): JSX.Element => {
     const [selectedBank, setSelectedBank] = useState<string>("");

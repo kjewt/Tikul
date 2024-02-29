@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { NameProps } from '../../types/authTypes';
+import type { NameProps } from '../../types/Types';
 
 
 export const Name = ({ onNameChange }: NameProps): JSX.Element => {

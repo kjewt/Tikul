@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AccountPwValid } from '../../business/valid/AccountPwValid';
 import { PwDoubleCheckValid } from '../../business/valid/PwDoubleCheckValid';
-import { AccountPWProps } from '../../types/authTypes';
+import { AccountPWProps } from '../../types/Types';
 
 
 

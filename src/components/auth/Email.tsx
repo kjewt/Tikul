@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { isEmailValid } from '../../business/valid/EmailValid';
-import type { EmailProps } from '../../types/authTypes';
+import type { EmailProps } from '../../types/Types';
 
 export const Email = ({ onEmailChange }: EmailProps): JSX.Element => {
     const [email, setEmail] = useState<string>("")

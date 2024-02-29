@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PwValid } from '../../business/valid/PwValid'
 import { PwDoubleCheckValid } from '../../business/valid/PwDoubleCheckValid'
-import { PasswordProps } from '../../types/authTypes';
+import { PasswordProps } from '../../types/Types';
 
 export const PasswordCheck = ({ onPasswordChange }: PasswordProps): JSX.Element => {
     const [password, setPassword] = useState<string>("")

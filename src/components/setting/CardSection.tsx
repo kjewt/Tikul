@@ -2,7 +2,8 @@ import { useRef } from "react";
 
 import { TbHandClick } from "react-icons/tb";
 import styled from 'styled-components';
-import type { commonType } from "../../types/authTypes";
+import { NumberFormat } from "../../business/NumberFormat";
+import type { commonType } from "../../types/Types";
 
 type PropsType = {
     name: commonType
@@ -51,7 +52,7 @@ export const CardSection = ({ name, bank, balance, account }: PropsType) => {
                                 </tr>
                                 <tr>
                                     <th>잔액</th>
-                                    <td className="text-base font-bold">{balance}원</td>
+                                    <td className="text-base font-bold">{NumberFormat(balance)}원</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -75,26 +76,27 @@ const Card = styled.div`
     transform: rotateY(180deg);
 `;
 
-const FrontFace = styled.div`
-    display: flex;
+const BackFace = styled.div`
+    
     position: absolute;
-    flex-direction: column;
-    justify-content: space-between;
     text-align: left;
     padding: 16px;
     border-radius: 8px;
-    color: #ffffff;
     height: 220px;
     width: 330px;
     backface-visibility: hidden;
 `;
 
-const BackFace = styled.div`
+const FrontFace = styled.div`
+display: flex;
     position: absolute;
+     flex-direction: column;
+    justify-content: space-between;
     transform: rotateY(180deg);
     text-align: left;
     padding: 16px;
     border-radius: 8px;
+    color: #ffffff;
     height: 220px;
     width: 330px;
     backface-visibility: hidden;

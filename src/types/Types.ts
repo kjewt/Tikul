@@ -30,6 +30,10 @@ export type BankProps = {
   onBankChange: (childValue: ChildrenValue) => void;
 };
 
+export type MoneyProps = {
+  onMoneyChange: (childValue: ChildrenValue) => void;
+};
+
 //atom 타입
 export type commonType = string | null;
 
@@ -41,11 +45,21 @@ export type AccountDataType = {
   bank: commonType;
   email: commonType;
   name: commonType;
+  categories: Array<string>;
 };
 
-//setting
+export type AccountHistoryItem = {
+  timestamp: Date;
+  detail: string;
+  memo: string;
+  transactionType: string;
+  category: string;
+  amount: number;
+};
 
-export type PropsType = {
-  onAccountPWChange: AccountPWProps;
-  width: string;
+//business Logic
+
+export type DateFormatterType = {
+  date: Date;
+  isDetail: boolean;
 };

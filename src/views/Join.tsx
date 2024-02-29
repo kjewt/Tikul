@@ -4,7 +4,7 @@ import { Email } from '../components/auth/Email';
 import { PasswordCheck } from '../components/auth/PasswordCheck';
 import { CheckboxGroup } from '../components/auth/CheckboxGroup';
 import { BtnJoin } from '../components/auth/BtnJoin';
-import type { ChildrenValue } from '../types/authTypes';
+import type { ChildrenValue } from '../types/Types';
 
 
 const Join = (): JSX.Element => {

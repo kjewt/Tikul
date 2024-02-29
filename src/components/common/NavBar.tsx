@@ -40,7 +40,7 @@ export const NavBar = () => {
 
             <div className="navbar bg-base-100 shadow-md">
                 <div className="flex-1">
-                    <Link to="/home">
+                    <Link to="/home/banking">
                         <button className="btn btn-ghost normal-case text-xl">TIKUL</button>
                     </Link>
                 </div>
@@ -51,7 +51,7 @@ export const NavBar = () => {
                                 <summary>
                                     {accountData && (accountData.name ? accountData.name : accountData.email)}
                                 </summary>
-                                {isOpen && <ul className="p-2 bg-base-100 rounded-t-none w-32">
+                                {isOpen && <ul className="p-2 bg-base-100 rounded-t-none w-32 z-10">
                                     <li><Link to="/setting" onClick={(prev) => setIsOpen(!prev)}>설정</Link></li>
                                     <li><div onClick={handleLogout}>로그아웃</div></li>
                                 </ul>}

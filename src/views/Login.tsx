@@ -4,7 +4,7 @@ import { Password } from '../components/auth/Password';
 import { BtnLogin } from '../components/auth/BtnLogin';
 import { BtnGoogleLogin } from '../components/auth/BtnGoogleLogin';
 import { Email } from '../components/auth/Email';
-import type { ChildrenValue } from '../types/authTypes';
+import type { ChildrenValue } from '../types/Types';
 
 const Login = (): JSX.Element => {
 

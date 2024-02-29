@@ -1,4 +1,4 @@
-import type {AccountDataType} from "../types/authTypes";
+import type {AccountDataType} from "../types/Types";
 
 export const initialAccountData: AccountDataType = {
   IsRegister: false,

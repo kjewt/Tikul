@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth, db } from '../../../firebase';
 import { doc, setDoc } from 'firebase/firestore'
-import type { ChildrenValue } from '../../types/authTypes';
+import type { ChildrenValue } from '../../types/Types';
 
 export const BtnJoin = ({ email, password, cbx }: { email: ChildrenValue, password: ChildrenValue, cbx: boolean }): JSX.Element => {
     const isValid = email.valid && password.valid && cbx

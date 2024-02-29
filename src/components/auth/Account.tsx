@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AccountValid } from '../../business/valid/AccountValid';
-import type { AccountProps } from '../../types/authTypes';
+import type { AccountProps } from '../../types/Types';
 
 
 export const Account = ({ onAccountChange }: AccountProps): JSX.Element => {

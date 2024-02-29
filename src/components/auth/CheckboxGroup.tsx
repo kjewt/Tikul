@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useCheckboxGroup } from "../../business/useCheckboxGroup";
-import type { CbxProps } from "../../types/authTypes";
+import type { CbxProps } from "../../types/Types";
 
 export const CheckboxGroup = ({ onCbxChange }: CbxProps) => {
     const { allChecked, ageChecked, policyChecked, handleCheckboxChange } = useCheckboxGroup();

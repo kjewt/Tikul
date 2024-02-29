@@ -5,7 +5,7 @@ import { Account } from "../auth/Account"
 import { AccountPWCheck } from "../auth/AccountPWCheck"
 import { Bank } from "../auth/Bank"
 import { Api_Register } from "../../api/InfoUtils"
-import type { ChildrenValue } from "../../types/authTypes"
+import type { ChildrenValue } from "../../types/Types"
 
 export const InputInfo = () => {
 
@@ -14,7 +14,7 @@ export const InputInfo = () => {
     const [account, setAccount] = useState<ChildrenValue>({ value: "", valid: false })
     const [accountPW, setAccountPW] = useState<ChildrenValue>({ value: "", valid: false })
     const [bank, setBank] = useState<ChildrenValue>({ value: "", valid: false })
-    const [isOpenModal, setIsOpenModal] = useState(false)
+    const [, setIsOpenModal] = useState(false)
 
     const handleName = (newName: ChildrenValue) => {
         setName(newName)
@@ -45,7 +45,6 @@ export const InputInfo = () => {
         }
         setIsOpenModal(true)
     }
-    console.log(isOpenModal)
 
     return (
         <>

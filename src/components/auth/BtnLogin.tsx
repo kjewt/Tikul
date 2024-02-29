@@ -24,7 +24,7 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
                         localStorage.setItem('account', JSON.stringify(doc.data()));
                         localStorage.setItem('uid', updatedUser.uid);
                         console.log(doc.data());
-                        navigate('/Home');
+                        navigate('/Home/banking');
                     } else {
                         console.log("Document data: 문서가 없습니다.");
                     }
