@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Account } from "../auth/Account"
 import { AccountPW } from "../auth/AccountPW"
 import { Bank } from "../auth/Bank"
@@ -11,7 +11,7 @@ import { Categories } from "./Categories";
 
 
 export const TransferInfo = (): JSX.Element => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [account, setAccount] = useState<ChildrenValue>({ value: "", valid: false })
     const [bank, setBank] = useState<ChildrenValue>({ value: "", valid: false })
     const [money, setMoney] = useState<ChildrenValue>({ value: "", valid: false })
