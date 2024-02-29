@@ -4,12 +4,12 @@
 // import { transactionsState, filterYearSate, filterMonthSate, isCorrectAccountPasswordState } from '../../state/atoms';
 
 export const Summary = (): JSX.Element => {
-    const today = new Date();
-    const thisMonth = today.getMonth() + 1;
-    const thisYear = today.getFullYear();
+    // const today = new Date();
+    // const thisMonth = today.getMonth() + 1;
+    // const thisYear = today.getFullYear();
     // const [transactions, setTransactions] = useRecoilState(transactionsState);
-    // const [thisyear, setThisYear] = useRecoilState(filterYearSate);
-    // const [thismonth, setThisMonth] = useRecoilState(filterMonthSate);
+    // const [thisYear, setThisYear] = useRecoilState(filterYearSate);
+    // const [thisMonth, setThisMonth] = useRecoilState(filterMonthSate);
     // const [isCorrectAccountPassword, setIsCorrectAccountPassword] = useRecoilState(isCorrectAccountPasswordState);
     // const [totalWithdrawal, setTotalWithdrawal] = useState(0);
     // const [totalDeposit, setTotalDeposit] = useState(0);
