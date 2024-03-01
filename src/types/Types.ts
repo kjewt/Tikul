@@ -34,6 +34,10 @@ export type MoneyProps = {
   onMoneyChange: (childValue: ChildrenValue) => void;
 };
 
+export type CategoryProps = {
+  onCategoryChange: (childValue: ChildrenValue) => void;
+};
+
 //atom 타입
 export type commonType = string | null;
 

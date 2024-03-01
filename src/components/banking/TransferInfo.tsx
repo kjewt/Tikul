@@ -1,13 +1,11 @@
-import { useState } from "react"
-import { Link } from "react-router-dom";
+import { useState, useCallback } from "react"
 import { Account } from "../auth/Account"
 import { AccountPW } from "../auth/AccountPW"
 import { Bank } from "../auth/Bank"
-// import { Api_Register } from "../../api/InfoUtils"
-import type { ChildrenValue } from "../../types/Types"
 import { Money } from "../auth/Money";
 import { Categories } from "./Categories";
-// import Keypad from '../common/KeyPad';
+import { BtnTransfer } from "./BtnTransfer";
+import type { ChildrenValue } from "../../types/Types"
 
 
 export const TransferInfo = (): JSX.Element => {
@@ -16,26 +14,30 @@ export const TransferInfo = (): JSX.Element => {
     const [bank, setBank] = useState<ChildrenValue>({ value: "", valid: false })
     const [money, setMoney] = useState<ChildrenValue>({ value: "", valid: false })
     const [accountPW, setAccountPW] = useState<ChildrenValue>({ value: "", valid: false })
+    const [category, setCategory] = useState<ChildrenValue>({ value: "", valid: false })
 
-    const handleAccount = (newAccount: ChildrenValue) => {
+    const handleAccount = useCallback((newAccount: ChildrenValue) => {
         setAccount(newAccount)
-    }
+    }, [])
 
-    const handleBank = (newBank: ChildrenValue) => {
+    const handleBank = useCallback((newBank: ChildrenValue) => {
         setBank(newBank)
-    }
+    }, [])
 
-    const handleMoney = (money: ChildrenValue) => {
+    const handleMoney = useCallback((money: ChildrenValue) => {
         setMoney(money)
-    }
-    const handleAccountPW = (newAccountPW: ChildrenValue) => {
-        setAccountPW(newAccountPW)
-    }
+    }, [])
 
-    console.log(account, bank, accountPW, money)
-    //     useEffect(() => {
-    //         setIsCorrectAccountPassword(false)
-    //     }, [])
+    const handleAccountPW = useCallback((newAccountPW: ChildrenValue) => {
+        setAccountPW(newAccountPW)
+    }, [])
+
+    const handleCategory = useCallback((newCategory: ChildrenValue) => {
+        setCategory(newCategory)
+    }, [])
+
+    console.log(account, bank, accountPW, money, category)
+    //    
 
     //     const handleTransfer = async () => {
     //         try {
@@ -123,20 +125,15 @@ export const TransferInfo = (): JSX.Element => {
     };
     return (<>
         <form onSubmit={handleSubmit}>
-            <div className="flex items-center justify-center mt-8">
+            <div className="flex items-center justify-center">
                 <div className="w-[330px] mb-16">
                     <Account onAccountChange={handleAccount} />
                     <Bank onBankChange={handleBank} />
                     <Money onMoneyChange={handleMoney} />
-                    <Categories />
+                    <Categories onCategoryChange={handleCategory} />
                     <AccountPW onAccountPWChange={handleAccountPW} />
 
-                    <div className="flex flex-col gap-2 mt-4">
-                        <button
-                            className={`btn btn-primary w-full text-base-100`}>  송금
-                        </button>
-                        <Link to="/home/banking"><div className="btn btn-primary btn-outline w-full">등록취소</div></Link>
-                    </div>
+                    <BtnTransfer />
 
 
 
@@ -144,18 +141,7 @@ export const TransferInfo = (): JSX.Element => {
                 </div>
             </div>
         </form>
-        <dialog id="my_modal_1" className="modal">
-            <div className="modal-box w-11/12 max-w-5xl">
-                <h3 className="font-bold text-lg">입력 정보를 다시 확인해주세요!</h3>
-                <div className="py-4 flex-col text-left">
-                    {/* <p>{`예금주: ${name.value}`}</p>
-                    <p>{`계좌번호 : ${account.value}`}</p>
-                    <p>{`은행 : ${bank.value}`}</p> */}
-                </div>
 
-
-            </div>
-        </dialog>
 
 
 

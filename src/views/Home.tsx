@@ -10,7 +10,7 @@ const Home = (): JSX.Element => {
     return (
         <div className="container min-h-screen">
             <NavBar />
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-8">
                 <Summary />
                 {accountData.IsRegister ? (
                     <Outlet />) : (

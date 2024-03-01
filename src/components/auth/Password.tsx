@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { PwValid } from '../../business/valid/PwValid';
 import { PasswordProps } from '../../types/Types';
 
 export const Password = ({ onPasswordChange }: PasswordProps): JSX.Element => {
     const [password, setPassword] = useState<string>("")
 
-    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePasswordChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const newPassword = event.target.value
         setPassword(newPassword);
         onPasswordChange({ value: newPassword, valid: PwValid(newPassword) })
-    };
+    }, [password])
 
 
     return (
@@ -26,6 +26,7 @@ export const Password = ({ onPasswordChange }: PasswordProps): JSX.Element => {
                     value={password}
                     onChange={handlePasswordChange}
                 />
+
             </div>
 
         </>

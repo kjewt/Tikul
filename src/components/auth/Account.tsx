@@ -19,7 +19,7 @@ export const Account = ({ onAccountChange }: AccountProps): JSX.Element => {
         <>
             <div className="form-control">
                 <label className="label">
-                    <span className="label-text">계좌 등록</span>
+                    <span className="label-text">계좌 입력</span>
                     {isError && (
                         <span className="password-error text-sm text-error">
                             9~13자리의 숫자로 작성해주세요.
