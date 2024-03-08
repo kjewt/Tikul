@@ -32,7 +32,8 @@ export const InputInfo = () => {
 
     const validTest = account.valid && accountPW.valid && bank.valid
 
-    const handleRegisterInfo = () => {
+    const handleRegisterInfo = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
         Api_Register({ account: account.value, pw: accountPW.value, bank: bank.value, name: name.value, navigate })
     }
 
@@ -75,7 +76,7 @@ export const InputInfo = () => {
                     </div>
 
                     <div className="modal-action">
-                        <form method="dialog">
+                        <form method="dialog ">
                             <button onClick={handleRegisterInfo} className="btn btn-primary btn-outline mr-2">등록하기</button>
                             <button className="btn btn-primary">돌아가기</button>
                         </form>

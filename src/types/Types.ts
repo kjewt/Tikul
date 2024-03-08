@@ -38,6 +38,10 @@ export type CategoryProps = {
   onCategoryChange: (childValue: ChildrenValue) => void;
 };
 
+export type MemoProps = {
+  onMemoChange: (childValue: ChildrenValue) => void;
+};
+
 //atom 타입
 export type commonType = string | null;
 
@@ -59,6 +63,16 @@ export type AccountHistoryItem = {
   transactionType: string;
   category: string;
   amount: number;
+};
+
+export type TransferDataType = {
+  account: string;
+  bank: string;
+  money: string;
+  accountPW: string;
+  category: string;
+  memo: string;
+  valid: boolean;
 };
 
 //business Logic

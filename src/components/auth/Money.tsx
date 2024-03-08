@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { accountDataState } from "../../state/atoms"
 import { NumberFormat } from '../../business/NumberFormat';
@@ -9,23 +9,24 @@ export const Money = ({ onMoneyChange }: MoneyProps): JSX.Element => {
     const [money, setMoney] = useState<number>(0);
     const isValid = money <= accountData.balance
 
-    const handleMoneyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleMoneyChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const rawMoney = event.target.value.replace(/[^0-9]/g, "");
         setMoney(Number(rawMoney));
         onMoneyChange({ value: rawMoney, valid: accountData.balance >= Number(rawMoney) });
-    };
+    }, [money])
 
 
 
 
-    const handleMoneyAdd = (amount: number) => {
-        setMoney((prevMoney) => prevMoney + amount);
-        console.log("더한 돈:", { money })
-        onMoneyChange({ value: String(money), valid: accountData.balance >= money })
+    const handleMoneyAdd = (num: number) => {
+        const amount = money + num
+        setMoney(amount);
+        onMoneyChange({ value: String(amount), valid: accountData.balance >= money })
     };
 
     const handleMaxAmount = () => {
         setMoney(accountData.balance);
+        onMoneyChange({ value: String(accountData.balance), valid: accountData.balance >= money })
     };
 
     return (

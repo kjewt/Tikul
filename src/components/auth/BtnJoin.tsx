@@ -13,7 +13,6 @@ export const BtnJoin = ({ email, password, cbx }: { email: ChildrenValue, passwo
         try {
             await createUserWithEmailAndPassword(firebaseAuth, email.value, password.value);
 
-
             // 사용자 정보 Firestore에 저장
             const user = firebaseAuth.currentUser;
 
@@ -25,6 +24,7 @@ export const BtnJoin = ({ email, password, cbx }: { email: ChildrenValue, passwo
                     bank: null,
                     accountPW: null,
                     balance: 0,
+                    categories: ["식비", "생활", "쇼핑", "주거/통신", "교통", "의료", "기타"],
                 };
                 await setDoc(doc(db, "users", user.uid), userData);
                 console.log('회원가입 성공');

@@ -12,7 +12,13 @@ export const Categories = ({ onCategoryChange }: CategoryProps): JSX.Element => 
         const clickedCategory = event.currentTarget.innerText;
         setCategory(clickedCategory);
         onCategoryChange({ value: clickedCategory, valid: true })
-    }, [])
+
+        const allButtons = document.querySelectorAll(".btn");
+        allButtons.forEach(button => button.classList.remove("btn-accent"));
+
+        event.currentTarget.classList.add('btn-accent');
+    }, [onCategoryChange]);
+
 
 
 

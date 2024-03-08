@@ -1,29 +1,26 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { Api_transferMutation } from "../../api/InfoUtils";
+import type { TransferDataType } from "../../types/Types";
 
-export const BtnTransfer = () => {
+export const BtnTransfer = ({ transferInfoProps }: { transferInfoProps: TransferDataType }): JSX.Element => {
+    const navigate = useNavigate();
+    const { mutate, isLoading, isError } = Api_transferMutation();
 
+    const handleTransferClick = () => {
+        // useMutation의 mutate 함수를 호출하여 비동기 작업 실행
+        mutate({ transferInfoProps, navigate });
+    };
 
     return (
-        <>
+        <div>
             <div className="flex flex-col gap-2 mt-4">
-                <button
-                    className={`btn btn-primary w-full text-base-100`}>  송금
+                <button onClick={handleTransferClick} className={`btn ${transferInfoProps.valid ? "btn-primary" : "btn-disabled"} w-full text-base-100`}>
+                    {(!isLoading) ? "송금" : (<span className="loading loading-spinner"></span>)}
                 </button>
-                <Link to="/home/banking"><div className="btn btn-primary btn-outline w-full">등록취소</div></Link>
+                <Link to="/home/banking">
+                    <div className="btn btn-primary btn-outline w-full">등록취소</div>
+                </Link>
             </div>
-
-            <dialog id="my_modal_1" className="modal">
-                <div className="modal-box w-11/12 max-w-5xl">
-                    <h3 className="font-bold text-lg">입력 정보를 다시 확인해주세요!</h3>
-                    <div className="py-4 flex-col text-left">
-                        {/* <p>{`예금주: ${name.value}`}</p>
-                    <p>{`계좌번호 : ${account.value}`}</p>
-                    <p>{`은행 : ${bank.value}`}</p> */}
-                    </div>
-
-
-                </div>
-            </dialog>
-        </>
-    )
-}
+        </div>
+    );
+};

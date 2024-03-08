@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { TbHandClick } from "react-icons/tb";
 import styled from 'styled-components';
@@ -14,19 +14,15 @@ type PropsType = {
 
 export const CardSection = ({ name, bank, balance, account }: PropsType) => {
     const card = useRef<HTMLDivElement | null>(null);
+    const [isFlipped, setIsFlipped] = useState(false);
 
     const cardClick = () => {
-        const elem = card.current;
-        if (elem && elem.style.transform === "rotateY(180deg)") {
-            elem.style.transform = "rotateY(0deg)";
-        } else if (elem) {
-            elem.style.transform = "rotateY(180deg)";
-        }
+        setIsFlipped(!isFlipped);
     };
 
     return (
         <CardContainer>
-            <Card ref={card} onClick={cardClick}>
+            <Card ref={card} onClick={cardClick} isFlipped={isFlipped}>
                 <FrontFace className="bg-primary border-2 border-primary">
                     <p className="text-xl">Tikul</p>
                     <div className="flex gap-1">
@@ -67,14 +63,15 @@ export const CardContainer = styled.div`
     perspective: 1000px;
 `;
 
-const Card = styled.div`
+const Card = styled.div<{ isFlipped?: boolean }>`
     width: 330px;
     height: 220px;
     transform-style: preserve-3d;
     transition: transform 1s;
     cursor: pointer;
-    transform: rotateY(180deg);
+    transform: ${(props) => props.isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'};
 `;
+
 
 const BackFace = styled.div`
     
