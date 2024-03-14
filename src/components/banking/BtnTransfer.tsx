@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Api_transferMutation } from "../../api/InfoUtils";
+import { Api_transferMutation } from "../../api/TransferUtils";
 import type { TransferDataType } from "../../types/Types";
 
 export const BtnTransfer = ({ transferInfoProps }: { transferInfoProps: TransferDataType }): JSX.Element => {
     const navigate = useNavigate();
-    const { mutate, isLoading, isError } = Api_transferMutation();
+    const { mutate, isLoading } = Api_transferMutation();
 
     const handleTransferClick = () => {
         // useMutation의 mutate 함수를 호출하여 비동기 작업 실행

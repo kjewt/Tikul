@@ -1,7 +1,7 @@
-import { doc, getDoc, getDocs, addDoc, query, orderBy, updateDoc, collection, where } from "firebase/firestore";
+import { doc, getDoc, getDocs, addDoc, query, orderBy, updateDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
-import { useMutation } from "react-query";
-import type { AccountHistoryItem, TransferDataType } from "../types/Types";
+import { AccountHistoryItem, CategoryDataType } from "../types/Types";
+import { categoriesStaticData } from "../state/staticData";
 
 
 type RegisterParamsType = {
@@ -13,9 +13,8 @@ type RegisterParamsType = {
 }
 
 const storedUid = localStorage.getItem('uid');
-const account = localStorage.getItem('account');
-const accountData = account ? JSON.parse(account) : null;
-
+// const account = localStorage.getItem('account');
+// const accountData = account ? JSON.parse(account) : null;
 
 //새로 accountData 데이터를 받아와서 로컬에 저장시키는 메서드.
 export const Api_Update = () => {
@@ -41,7 +40,6 @@ export const Api_Register = async ({ account, pw, bank, name, navigate }: Regist
                 accountPW: pw,
                 bank: bank,
                 name: name,
-                categories: ["식비", "생활", "쇼핑", "주거/통신", "교통", "의료", "기타"]
             };
 
             const userRef = doc(db, "users", storedUid);
@@ -56,125 +54,87 @@ export const Api_Register = async ({ account, pw, bank, name, navigate }: Regist
     }
 };
 
-
-
-
 export const Api_fetchAccountHistory = async () => {
     try {
         if (!storedUid) {
-            return;
+            return alert("로그인이 필요합니다.");
         }
 
         const listRef = collection(db, "users", storedUid, "transferList");
 
-        const querySnapshot = await getDocs(listRef);
+        const listQuerySnapshot = await getDocs(listRef);
 
-        if (querySnapshot.empty) {
-            await addDoc(listRef, {
-                timestamp: new Date(),
-                detail: "",
-                memo: "",
-                transactionType: "",
-                category: "",
-                amount: 0
-            } as AccountHistoryItem);
+        if (listQuerySnapshot.empty) {
+            await addDoc(listRef, {});
 
-            return []
+
+
+            return [];
 
         } else {
-            const querySnapshot = await getDocs(query(listRef, orderBy("timestamp", "desc")));
+            let listData = [] as Array<AccountHistoryItem>;
+            const listQuerySnapshot = await getDocs(query(listRef, orderBy("timestamp", "desc")));
 
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                console.log(data);
-                return data
+            listQuerySnapshot.forEach((doc) => {
+                const item = doc.data();
+                listData.push(item as AccountHistoryItem);
             });
+
+            return listData;
         }
     } catch (error) {
-
         alert("계좌 내역 불러오기에 실패했습니다. 다시 시도해주세요.");
         console.error(error);
-        return []
+        return [];
     }
 };
 
-// 송금
-export const Api_transferMutation = () => {
-    return useMutation(
-        async ({ transferInfoProps, navigate }: { transferInfoProps: TransferDataType, navigate: any }) => {
-            try {
-                // 입력된 은행 이름과 계좌번호로 유저 검색
-                const usersRef = collection(db, 'users');
-                const q = query(usersRef, where('bank', '==', transferInfoProps.bank), where('account', '==', transferInfoProps.account));
-                const querySnapshot = await getDocs(q);
 
-                // 입력한 은행 이름과 계좌번호와 일치하는 유저가 찾아지면
-                if (!querySnapshot.empty) {
 
-                    // 송금하는 현재 유저의 "details" 컬렉션에 송금 내역 추가
-                    if (!storedUid) {
-                        alert('로그인이 필요합니다.');
-                        // 로그인 페이지로 이동하거나 로그인을 유도하는 메시지를 표시할 수 있습니다.
-                        navigate("/login"); // 로그인 페이지로 이동
-                        return;
-                    }
-
-                    if (accountData.accountPW !== transferInfoProps.accountPW) {
-                        console.log('계좌 비밀번호가 일치하지 않습니다.');
-                        return;
-                    }
-                    const currentUserDocRef = doc(db, 'users', storedUid);
-
-                    // 문서 데이터 가져오기
-                    const currentUserDocSnap = await getDoc(currentUserDocRef);
-                    const currentUserData = currentUserDocSnap.data();
-
-                    // 보내는 유저
-                    if (currentUserData) {
-                        const currentUserDetailsRef = collection(db, 'users', storedUid, 'transferList');
-                        const addTransaction = {
-                            amount: - Number(transferInfoProps.money),
-                            category: transferInfoProps.category,
-                            detail: `${accountData.name}`, // 보내는 사람 이름
-                            memo: transferInfoProps.memo,
-                            timestamp: new Date(),
-                            transactionType: "송금"
-                        } as AccountHistoryItem;
-
-                        await addDoc(currentUserDetailsRef, addTransaction);
-
-                        await updateDoc(currentUserDocRef, {
-                            balance: currentUserData.balance - Number(transferInfoProps.money),
-                        });
-
-                        // const userDoc = querySnapshot.docs[0].ref;
-                        const userDoc = querySnapshot.docs[0];
-                        const userRef = doc(db, 'users', userDoc.id);
-
-                        // 돈 받는 유저의 "transferList" 컬렉션에 송금 내역 추가
-                        const detailsRef = collection(db, 'users', userDoc.id, 'transferList');
-                        await addDoc(detailsRef, {
-                            amount: Number(transferInfoProps.money),
-                            category: transferInfoProps.category,
-                            detail: `${accountData.name}`, // 보내는 사람 이름
-                            memo: transferInfoProps.memo,
-                            timestamp: new Date(),
-                            transactionType: "입금"
-                        } as AccountHistoryItem);
-
-                        await updateDoc(userRef, {
-                            balance: userDoc.data().balance + Number(transferInfoProps.money),
-                        });
-
-                        console.log('송금 성공! 유저에게 내역이 추가되었습니다.');
-                    }
-
-                } else {
-                    console.log('입력한 은행 이름과 계좌번호와 일치하는 유저를 찾을 수 없습니다.');
-                }
-            } catch (error) {
-                console.log('송금 실패:', error);
-            }
+// 요약 내역 생성 및 불러오기
+export const Api_fetchSummaryData = async () => {
+    try {
+        if (!storedUid) {
+            return alert("로그인이 필요합니다.");
         }
-    );
+
+        const summaryRef = collection(db, "users", storedUid, "summary");
+
+        const summaryQuerySnapshot = await getDocs(summaryRef);
+        if (summaryQuerySnapshot.empty) {
+            await addDoc(summaryRef, {
+                category: "입금",
+                thisMonth: 0,
+                lastMonth: 0,
+            });
+
+            for (const categoryData of categoriesStaticData) {
+                await addDoc(summaryRef, JSON.parse(JSON.stringify(categoryData)));
+            }
+
+            console.log("등록완료")
+            const summaryData = [{
+                category: "입금",
+                thisMonth: 0,
+                lastMonth: 0,
+            }, ...categoriesStaticData];
+            return summaryData;
+
+        } else {
+            let summaryData = [] as Array<CategoryDataType>;
+            const SummaryQuerySnapshot = await getDocs(query(summaryRef, orderBy("category")));
+
+            SummaryQuerySnapshot.forEach((doc) => {
+                const item = doc.data();
+                summaryData.push(item as CategoryDataType);
+            });
+            console.log(summaryData)
+            return summaryData;
+        }
+    } catch (error) {
+        alert("요약 데이터를 불러오는데 실패했습니다. 다시 시도해주세요.");
+        console.error(error);
+        return [];
+    }
 };
+

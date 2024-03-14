@@ -42,6 +42,33 @@ export type MemoProps = {
   onMemoChange: (childValue: ChildrenValue) => void;
 };
 
+export type CategoryDataType = {
+  category: string;
+  thisMonth: number;
+  lastMonth: number;
+};
+
+// 카테고리 클래스와 타입
+export class CategoryData {
+  category: string;
+  thisMonth: number;
+  lastMonth: number;
+
+  constructor(category: string, thisMonth: number, lastMonth: number) {
+    this.category = category;
+    this.thisMonth = thisMonth;
+    this.lastMonth = lastMonth;
+  }
+
+  toJSON() {
+    return {
+      category: this.category,
+      thisMonth: this.thisMonth,
+      lastMonth: this.lastMonth,
+    };
+  }
+}
+
 //atom 타입
 export type commonType = string | null;
 

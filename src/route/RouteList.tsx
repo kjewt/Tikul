@@ -1,7 +1,7 @@
 import { Routes, Navigate, Route } from 'react-router-dom';
 import Login from '../views/Login';
 import Join from '../views/Join';
-import Home from '../views/Home'
+import { Home } from '../views/Home'
 import Setting from '../views/Setting'
 import TransactionDetail from '../views/TransactionDetail';
 import NotAUser from '../views/NotAUser';

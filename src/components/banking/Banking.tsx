@@ -23,7 +23,7 @@ export const Banking = (): JSX.Element => {
                     <p className="py-3">Banking</p>
                 </div>
 
-                <div className="card w-96 mb-10 bg-accent shadow-xl">
+                <div className="card w-full mb-10 bg-accent shadow-xl">
                     <div className="m-3 rounded-xl bg-base-100">
                         <div className="user-account p-4 text-sm badge badge-secondary m-4 cursor-pointer" onClick={handleCopy}>
                             <span>{accountData.name}님의 계좌 |</span>
@@ -31,9 +31,9 @@ export const Banking = (): JSX.Element => {
                             <span className="p-1">{accountData.account}</span>
                         </div>
                         <div className="account-balance px-4 text-right text-xl">{NumberFormat(accountData.balance)}원</div>
-                        <div className="btn-banking p-4 flex justify-around gap-3">
-                            <Link to="/home/transfer" className="btn btn-primary text-base-100 w-1/2">송금</Link>
-                            <Link to="/home/addMoney" className="btn btn-outline btn-primary w-1/2 btn-hover">충전</Link>
+                        <div className="btn-banking p-4">
+                            <Link to="/home/transfer" className="btn btn-primary text-base-100 w-full">송금</Link>
+                            {/* <Link to="/home/addMoney" className="btn btn-outline btn-primary w-1/2 btn-hover">충전</Link> */}
 
                         </div>
                     </div>

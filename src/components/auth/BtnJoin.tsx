@@ -32,6 +32,7 @@ export const BtnJoin = ({ email, password, cbx }: { email: ChildrenValue, passwo
             }
         } catch (error) {
             console.log('회원가입 실패', error);
+            alert(`회원가입 실패', ${error}`);
         }
     };
 

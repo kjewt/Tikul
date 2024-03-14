@@ -3,13 +3,6 @@ import { Link } from "react-router-dom";
 
 export const AddMoney = (): JSX.Element => {
 
-    // const [accountData, setAccountData] = useRecoilState(accountDataState)
-    // const [isBanking, setIsBanking] = useRecoilState(isBankingState);
-
-
-    // const handleAddMoneyCancelBtn = () => {
-    //     setIsBanking(0);
-    // }
 
     return (
         <>
