@@ -1,8 +1,9 @@
 import { useQuery } from 'react-query';
-import { Api_fetchSummaryData } from '../../api/InfoUtils';
+import { Api_fetchSummaryData } from '../../api/SummaryUtils';
 import { CategoryDataType } from '../../types/Types';
 import { CategoriesList } from './CategoriesList';
 import { NumberFormat } from '../../business/NumberFormat';
+import { BtnEditCategory } from './BtnEditCategory';
 
 
 
@@ -23,24 +24,36 @@ export const Summary = (): JSX.Element => {
 
                     <div className="card flex-shrink-0 w-full shadow-2xl bg-base-100">
                         <div className="card-body text-md">
-                            <div className="category">
-                                <div className="edit flex gap-2 justify-end">
-                                    <button className="link link-primary pb-2">자세히보기</button>
-                                </div>
-                                {summaryData?.map((item, index) =>
-                                (<div key={String(index) + item.category} className="category-content flex justify-between p-4 border-b last:border-0">
-                                    <span className="min-w-16 w-1/3">{item.category}</span>
-                                    <CategoriesList thisMonth={item.thisMonth} lastMonth={item.lastMonth} />
-                                    <span>{NumberFormat(item.thisMonth)}원</span>
-                                </div>))}
-
+                            <div className="edit flex gap-2 justify-end">
+                                <button className="link link-primary pb-2">자세히보기</button>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>수정</th>
+                                            <th>카테고리</th>
+                                            <th></th>
+                                            <th>이번달 소비</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {summaryData?.map((item, index) =>
+                                        (<tr key={String(index) + item.category}>
+                                            <td><BtnEditCategory category={item.category} /></td>
+                                            <td className="min-w-16">{item.category}</td>
+                                            <td><CategoriesList thisMonth={item.thisMonth} lastMonth={item.lastMonth} /></td>
+                                            <td>{NumberFormat(item.thisMonth)}원</td>
+                                        </tr>))}
+                                    </tbody>
+                                </table>
                             </div>
 
 
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 }

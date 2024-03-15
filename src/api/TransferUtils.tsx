@@ -99,16 +99,12 @@ export const Api_transferMutation = () => {
                         balance: receiverDoc.data().balance + Number(transferInfoProps.money),
                     });
                     // 받는 유저 입금 카테고리에 추가
-
-                    // 받는 사람의 "입금" 카테고리에 대한 summary 문서 참조 생성
                     const receiverSummaryRef = collection(db, 'users', receiverDoc.id, 'summary');
                     const summaryQuerySnapshot = await getDocs(receiverSummaryRef);
 
-                    // "입금" 카테고리를 가진 문서를 찾아서 입금받는 금액을 더합니다.
                     summaryQuerySnapshot.forEach(async (doc) => {
                         const categoryData = doc.data();
                         if (categoryData.category === '입금') {
-                            // 현재 thisMonth에 입금받는 금액을 더하여 업데이트합니다.
                             await updateDoc(doc.ref, {
                                 thisMonth: categoryData.thisMonth + Number(transferInfoProps.money)
                             });

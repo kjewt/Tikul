@@ -47,7 +47,8 @@ export const TransferList = (): JSX.Element => {
                                         <span className="text-sm opacity-50 p-2">{item.memo}</span>
                                     </td>
                                     <td className="text-xl flex items-center">{NumberFormat(item.amount)}</td>
-                                </tr>))}
+                                </tr>
+                            ))}
 
                         </tbody>
                     </table>

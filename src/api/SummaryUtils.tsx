@@ -56,26 +56,25 @@ export const Api_fetchSummaryData = async () => {
 
 
 // 요약 내역의 카테고리 이름 수정기능
-export const Api_EditCategory = async (category: string) => {
+export const Api_EditCategory = async (oldCategory: string, newCategory: string) => {
     try {
         if (!storedUid) {
             return alert("로그인이 필요합니다.");
         }
 
-        const summaryQuery = query(collection(db, 'users', storedUid, 'summary'), where('category', '==', transferInfoProps.category));
-
-        // 해당 쿼리 실행
+        const summaryQuery = query(collection(db, 'users', storedUid, 'summary'), where('category', '==', oldCategory));
         const summarySnapshot = await getDocs(summaryQuery);
 
-        // 쿼리 결과가 비어있지 않은 경우에만 업데이트 실행
         if (!summarySnapshot.empty) {
+
             // summary 컬렉션 내에서 category가 일치하는 문서의 참조 가져오기
             const summaryDocRef = summarySnapshot.docs[0].ref;
 
-            // 해당 문서의 thisMonth 필드 업데이트
             await updateDoc(summaryDocRef, {
-                category: "dd"
-            });
+                category: newCategory
+            })
+
+            alert("수정이 완료되었습니다.")
         }
 
     } catch (error) {
