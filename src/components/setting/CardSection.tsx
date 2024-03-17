@@ -14,15 +14,15 @@ type PropsType = {
 
 export const CardSection = ({ name, bank, balance, account }: PropsType) => {
     const card = useRef<HTMLDivElement | null>(null);
-    const [isFlipped, setIsFlipped] = useState(false);
+    const [isflipped, setIsflipped] = useState(false);
 
     const cardClick = () => {
-        setIsFlipped(!isFlipped);
+        setIsflipped(!isflipped);
     };
 
     return (
         <CardContainer>
-            <Card ref={card} onClick={cardClick} isFlipped={isFlipped}>
+            <Card ref={card} onClick={cardClick} isflipped={isflipped}>
                 <FrontFace className="bg-primary border-2 border-primary">
                     <p className="text-xl">Tikul</p>
                     <div className="flex gap-1">
@@ -63,13 +63,13 @@ export const CardContainer = styled.div`
     perspective: 1000px;
 `;
 
-const Card = styled.div<{ isFlipped?: boolean }>`
+const Card = styled.div<{ isflipped?: boolean }>`
     width: 330px;
     height: 220px;
     transform-style: preserve-3d;
     transition: transform 1s;
     cursor: pointer;
-    transform: ${(props) => props.isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'};
+    transform: ${(props) => props.isflipped ? 'rotateY(0deg)' : 'rotateY(180deg)'};
 `;
 
 

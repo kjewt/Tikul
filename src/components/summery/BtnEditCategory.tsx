@@ -11,8 +11,13 @@ export const BtnEditCategory = ({ category }: BtnEditCategoryType) => {
     const [newCategory, setNewCategory] = useState<string>("")
 
     const handleModalOpen = useCallback(() => {
-        setIsOpen(prev => !prev);
+        setIsOpen(true);
     }, []);
+
+    const handleModalClose = useCallback(() => {
+        setIsOpen(false);
+    }, []);
+
 
     const handleInputValue = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const newCategory = event.target.value
@@ -21,12 +26,12 @@ export const BtnEditCategory = ({ category }: BtnEditCategoryType) => {
 
 
     return (
-        <form onSubmit={(e) => e.preventDefault()}>
-            <button onClick={handleModalOpen}>
-                <FaEdit className="text-xl" />
+        <form onSubmit={(e) => e.preventDefault()} >
+            <button onClick={handleModalOpen} >
+                <FaEdit className="text-xl text-primary mt-1" />
             </button>
             {isOpen && (
-                <div className="flex gap-1">
+                <div className="flex gap-1" onMouseOut={handleModalClose}>
                     <input value={newCategory} type="text" placeholder="카테고리" className="input input-bordered input-sm w-24 max-w-xs" onChange={handleInputValue} />
                     <button className="btn btn-sm" onClick={() => Api_EditCategory(category, newCategory)}>등록</button>
                 </div>

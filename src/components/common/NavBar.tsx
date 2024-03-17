@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { Logout } from '../../business/Logout';
 import { useRecoilState } from 'recoil';
@@ -9,56 +10,55 @@ import { initialAccountData } from '../../state/staticData';
 export const NavBar = () => {
     const navigate = useNavigate();
     const [accountData, setAccountData] = useRecoilState(accountDataState)
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
 
+
+    const storedAccountData = localStorage.getItem('account');
+    const storedUid = localStorage.getItem('uid');
     useEffect(() => {
-        const storedAccountData = localStorage.getItem('account');
-        const storedUid = localStorage.getItem('uid');
 
-        if (!storedAccountData) {
+        if (!storedUid && !storedAccountData) {
             navigate('/login');
         }
 
-        if (storedAccountData && storedUid) {
-            const parsedAccountData = JSON.parse(storedAccountData);
-            setAccountData(parsedAccountData);
-        } else {
-            ('사용자 정보를 찾을 수 없습니다');
-        }
+        // if (storedAccountData && storedUid) {
+        //     const parsedAccountData = JSON.parse(storedAccountData);
+        //     setAccountData(parsedAccountData);
+        // } else {
+        //     ('사용자 정보를 찾을 수 없습니다');
+        // }
     }, []);
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         setAccountData(initialAccountData)
         Logout();
         navigate('/login');
-        console.log(accountData)
 
-    };
+    }, [])
 
     return (
         <div>
 
-            <div className="navbar bg-base-100 shadow-md">
+            <div className="navbar bg-base-100 shadow-md hover:bg-transparent">
                 <div className="flex-1">
                     <Link to="/home/banking">
-                        <button className="btn btn-ghost normal-case text-xl">TIKUL</button>
+                        <button className="btn btn-ghost normal-case text-xl hover:bg-transparent">TIKUL</button>
                     </Link>
                 </div>
-                <div className="flex-none">
-                    <ul className="menu menu-horizontal px-1">
-                        <li>
-                            <details>
-                                <summary>
-                                    {accountData && (accountData.name ? accountData.name : accountData.email)}
-                                </summary>
-                                {isOpen && <ul className="p-2 bg-base-100 rounded-t-none w-32 z-10">
-                                    <li><Link to="/setting" onClick={(prev) => setIsOpen(!prev)}>설정</Link></li>
-                                    <li><div onClick={handleLogout}>로그아웃</div></li>
-                                </ul>}
-                            </details>
-                        </li>
-                    </ul>
-                </div>
+                {storedUid && <div className="flex-none">
+                    <div>
+                        {accountData.name ? accountData.name : accountData.email}
+                    </div>
+                    <div className="dropdown dropdown-bottom dropdown-end">
+                        <button tabIndex={0} className="btn btn-ghost hover:bg-transparent"><FaUserCircle className="text-2xl" /></button>
+                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                            <ul>
+                                <li><Link to="/setting" onClick={(prev) => setIsOpen(!prev)}>설정</Link></li>
+                                <li><div onClick={handleLogout}>로그아웃</div></li>
+                            </ul>                        </ul>
+                    </div>
+
+                </div>}
             </div>
         </div>
     );

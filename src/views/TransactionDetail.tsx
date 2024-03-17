@@ -1,9 +1,5 @@
-// import React, { useState } from 'react';
-// import { Link } from 'react-router-dom'
 // import { useRecoilState } from 'recoil';
 // import { filterMonthSate, filterYearSate } from '../state/atoms'
-// import NavBar from '../components/common/NavBar';
-// import TransferList from '../components/main/TransferList';
 
 const TransactionDetail = (): JSX.Element => {
 

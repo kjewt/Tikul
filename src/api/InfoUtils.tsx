@@ -56,7 +56,7 @@ export const Api_Register = async ({ account, pw, bank, name, navigate }: Regist
 export const Api_fetchAccountHistory = async () => {
     try {
         if (!storedUid) {
-            return alert("로그인이 필요합니다.");
+            return alert("거래내역을 가져오기 위해 로그인이 필요합니다.");
         }
 
         const listRef = collection(db, "users", storedUid, "transferList");

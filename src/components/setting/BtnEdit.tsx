@@ -47,7 +47,7 @@ export const BtnEdit = ({ pw }: pwType) => {
             </button>
             {isInputVisible && (
                 <>
-                    <form>
+                    <form onSubmit={(e) => e.preventDefault()}>
                         <AccountPW onAccountPWChange={handleAccountPW} width={`w-[330px]`} />
                         <button onClick={handlePWCheck} className="btn btn-primary w-[330px] mt-4">
                             확인

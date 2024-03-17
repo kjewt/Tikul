@@ -1,18 +1,33 @@
+import { useCallback, useState } from "react"
 import { useQuery } from 'react-query';
 import { Api_fetchSummaryData } from '../../api/SummaryUtils';
+import { RxTriangleRight } from "react-icons/rx";
 import { CategoryDataType } from '../../types/Types';
-import { CategoriesList } from './CategoriesList';
-import { NumberFormat } from '../../business/NumberFormat';
-import { BtnEditCategory } from './BtnEditCategory';
+
+import { ListSummary } from './ListSummary';
+import { LineChartSummary } from "./LineChartSummary";
+import { PieChartSummary } from "./PieChartSummary";
 
 
 
 const fetchSummaryData = async (): Promise<CategoryDataType[]> => {
     const data = await Api_fetchSummaryData();
-    return data || []; // 만약 data가 undefined이면 빈 배열을 반환
+    return data || [];
 };
 export const Summary = (): JSX.Element => {
-    const { data: summaryData } = useQuery('summaryData', fetchSummaryData);
+    const [isList, setIsList] = useState<boolean>(true)
+    const { data: summaryData, isLoading, error } = useQuery('summaryData', fetchSummaryData, {
+        initialData: [],
+    });
+
+    if (isLoading) return <p>Loading...</p>;
+
+    if (error) return <p>데이터를 가져올 수 없습니다. <b />잠시 후에 다시 시도해주세요.</p>;
+
+    const handleSwitchPage = useCallback(() => {
+        setIsList((prev) => !prev)
+    }, [])
+
 
     return (
         <>
@@ -24,31 +39,17 @@ export const Summary = (): JSX.Element => {
 
                     <div className="card flex-shrink-0 w-full shadow-2xl bg-base-100">
                         <div className="card-body text-md">
-                            <div className="edit flex gap-2 justify-end">
-                                <button className="link link-primary pb-2">자세히보기</button>
+                            <div className="edit flex justify-end items-center">
+                                <button className="link link-primary" onClick={handleSwitchPage}>{`${isList ? "차트" : "통계"}보기`}</button>
+                                <RxTriangleRight className="text-primary text-2xl" />
                             </div>
-                            <div className="overflow-x-auto">
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>수정</th>
-                                            <th>카테고리</th>
-                                            <th></th>
-                                            <th>이번달 소비</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {summaryData?.map((item, index) =>
-                                        (<tr key={String(index) + item.category}>
-                                            <td><BtnEditCategory category={item.category} /></td>
-                                            <td className="min-w-16">{item.category}</td>
-                                            <td><CategoriesList thisMonth={item.thisMonth} lastMonth={item.lastMonth} /></td>
-                                            <td>{NumberFormat(item.thisMonth)}원</td>
-                                        </tr>))}
-                                    </tbody>
-                                </table>
-                            </div>
+                            {isList ?
+                                <ListSummary summaryData={summaryData} /> :
+                                (<div className="flex flex-col gap-10">
+                                    <PieChartSummary summaryData={summaryData} />
+                                    <LineChartSummary summaryData={summaryData} />
 
+                                </div>)}
 
                         </div>
                     </div>

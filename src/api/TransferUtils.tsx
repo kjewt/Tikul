@@ -57,7 +57,6 @@ export const Api_transferMutation = () => {
                         });
                     }
 
-
                     // 받는 사람의 이름 가져오기
                     const receiverDoc = querySnapshot.docs[0]; // 첫 번째로 검색된 문서 사용
                     const receiverName = receiverDoc.data().name;
@@ -79,7 +78,6 @@ export const Api_transferMutation = () => {
                     await updateDoc(currentUserDocRef, {
                         balance: accountData.balance - Number(transferInfoProps.money),
                     });
-
 
 
                     // 돈 받는 유저의 "transferList" 컬렉션에 입금 내역 추가

@@ -59,7 +59,7 @@ export const Api_fetchSummaryData = async () => {
 export const Api_EditCategory = async (oldCategory: string, newCategory: string) => {
     try {
         if (!storedUid) {
-            return alert("로그인이 필요합니다.");
+            return alert("요약 정보를 불러오는데 로그인이 필요합니다.");
         }
 
         const summaryQuery = query(collection(db, 'users', storedUid, 'summary'), where('category', '==', oldCategory));

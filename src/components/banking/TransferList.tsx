@@ -14,20 +14,28 @@ const fetchAccountHistory = async (): Promise<AccountHistoryItem[]> => {
 };
 
 export const TransferList = (): JSX.Element => {
-    const { data: transferData, isLoading, isError } = useQuery('accountHistory', fetchAccountHistory);
+    const { data: transferData, isLoading, isError } = useQuery('accountHistory', fetchAccountHistory, {
+        initialData: []
+    });
 
 
     if (!transferData) {
 
-        return <div className="bg-base-100 rounded-xl p-3 mb-3 mx-3">거래내역이 없습니다.</div>
+        return <div className="bg-base-100 rounded-xl p-3 mb-3 mx-3">거래내역 불러오기 실패했습니다.</div>
     }
+    if (transferData.length === 0) {
+
+        return <div className="bg-base-100 rounded-xl py-20 mb-3 mx-3">거래내역이 없습니다.</div>
+    }
+
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div className="bg-base-100 rounded-xl py-20 mb-3 mx-3">Loading...</div>;
     }
 
     if (isError) {
-        return <div>데이터를 불러오는데 에러가 발생했습니다. <b />잠시 후 다시 시도해주세요.</div>;
+        return <div className="bg-base-100 rounded-xl py-20 mb-3 mx-3">데이터를 불러오는데 에러가 발생했습니다. <b />잠시 후 다시 시도해주세요.</div>;
     }
+
     return (
         <div className="flex flex-col gap-3 mb-3 mx-3 rounded-xl bg-base-100 p-3">
             <div className="h-8 rounded-xl bg-primary">필터링 영역</div>
