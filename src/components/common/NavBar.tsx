@@ -21,12 +21,7 @@ export const NavBar = () => {
             navigate('/login');
         }
 
-        // if (storedAccountData && storedUid) {
-        //     const parsedAccountData = JSON.parse(storedAccountData);
-        //     setAccountData(parsedAccountData);
-        // } else {
-        //     ('사용자 정보를 찾을 수 없습니다');
-        // }
+
     }, []);
 
     const handleLogout = useCallback(() => {
@@ -41,7 +36,7 @@ export const NavBar = () => {
 
             <div className="navbar bg-base-100 shadow-md hover:bg-transparent">
                 <div className="flex-1">
-                    <Link to="/home/banking">
+                    <Link to={`${storedUid ? "/home/banking" : "/login"}`}>
                         <button className="btn btn-ghost normal-case text-xl hover:bg-transparent">TIKUL</button>
                     </Link>
                 </div>

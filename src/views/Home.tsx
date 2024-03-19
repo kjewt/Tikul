@@ -1,7 +1,7 @@
 // import { useQuery } from 'react-query';
 import { useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { Summary } from '../components/summery/Summary';
+import { Summary } from '../components/summary/Summary';
 import { useRecoilState } from 'recoil';
 import { accountDataState } from '../state/atoms';
 import { Api_Update } from '../api/InfoUtils';
@@ -14,8 +14,7 @@ import type { AccountDataType } from '../types/Types';
 // };
 
 export const Home = (): JSX.Element => {
-    // const { data, error, isLoading } = useQuery("accountDataFetch", fetchAccountData)
-    const [accountData, setAccountData] = useRecoilState(accountDataState);
+    const [, setAccountData] = useRecoilState(accountDataState);
     const currentUser = JSON.parse(localStorage.getItem("account") || '{}') as AccountDataType;
 
     const isRegister = currentUser.IsRegister
@@ -23,18 +22,10 @@ export const Home = (): JSX.Element => {
         const fetchData = async () => {
             setAccountData(currentUser);
         };
-        Api_Update()
+        // Api_Update()
         fetchData();
     }, []);
-    // console.log(data)
 
-    // if (data) {
-    //     setAccountData(data as AccountDataType)
-    // }
-
-    // if (error) { return <span className="p-10"> 데이터를 가져올 수 없습니다. </span> }
-
-    // if (isLoading) { return <span className="loading loading-spinner loading-lg"></span> }
 
     return (
         <div className="container min-h-screen">
