@@ -8,13 +8,9 @@ import { categoriesStaticData } from "../state/staticData";
 const storedUid = localStorage.getItem('uid');
 
 // 요약 내역 생성 및 불러오기
-export const Api_fetchSummaryData = async () => {
+export const Api_fetchSummaryData = async (uid: string) => {
     try {
-        if (!storedUid) {
-            return alert("로그인이 필요합니다.");
-        }
-
-        const summaryRef = collection(db, "users", storedUid, "summary");
+        const summaryRef = collection(db, "users", uid, "summary");
 
         const summaryQuerySnapshot = await getDocs(summaryRef);
         if (summaryQuerySnapshot.empty) {

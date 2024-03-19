@@ -9,7 +9,9 @@ import { useState } from 'react';
 export const Banking = (): JSX.Element => {
     const [accountData] = useRecoilState(accountDataState);
     const [isCopied, setIsCopied] = useState<boolean>(false);
+
     console.log(accountData)
+
     const copyToClipboard = async () => {
         try {
             const infoToCopy = `${accountData.bank} ${accountData.name} ${accountData.account}`;

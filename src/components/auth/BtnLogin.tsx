@@ -2,67 +2,64 @@ import { useNavigate, Link } from 'react-router-dom';
 import { firebaseAuth, db } from '../../../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { useRecoilState } from 'recoil';
-import { accountDataState } from '../../state/atoms';
+import { useMutation } from 'react-query';
+// import { accountDataState, uidDataState } from '../../state/atoms';
+// import { useRecoilState } from 'recoil'
+// import { AccountDataType } from '../../types/Types';
 
 type PropsType = { email: string, password: string }
 
 export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
     const navigate = useNavigate();
-    const [, setAccountData] = useRecoilState(accountDataState)
+    // const [accountData, setAccountData] = useRecoilState(accountDataState);
+    // const [uidData, setUidData] = useRecoilState(uidDataState);
 
-    const Login = async () => {
-        try {
-            await signInWithEmailAndPassword(firebaseAuth, email, password);
-            const updatedUser = firebaseAuth.currentUser;
+    const loginMutation = useMutation(async () => {
+        const userAuth = await signInWithEmailAndPassword(firebaseAuth, email, password);
+        const updatedUser = userAuth.user;
 
-            if (updatedUser) {
-                const userRef = doc(db, "users", updatedUser.uid);
-                getDoc(userRef).then((doc: any) => {
-                    if (doc.exists) {
-                        setAccountData(doc.data());
-                        localStorage.setItem('account', JSON.stringify(doc.data()));
-                        localStorage.setItem('uid', updatedUser.uid);
-                        console.log(doc.data());
-                        navigate('/Home/banking');
-                    } else {
-                        console.log("Document data: 문서가 없습니다.");
-                    }
-                }).catch((error: Error) => {
-                    console.log("Error getting document:", error);
-                });
-            }
-        } catch (error) {
-            console.log('로그인 실패', error);
-            const modalElement = document.getElementById('my_modal_1') as HTMLDialogElement | null;
-
-            if (modalElement) {
-                modalElement.showModal();
+        if (updatedUser && updatedUser.uid) {
+            const userRef = doc(db, "users", updatedUser.uid);
+            const docSnap = await getDoc(userRef);
+            if (docSnap.exists()) {
+                localStorage.setItem('uid', updatedUser.uid);
+                localStorage.setItem('account', JSON.stringify(docSnap.data()));
+                // setAccountData(docSnap.data() as AccountDataType);
+                // setUidData(updatedUser.uid);
+                // console.log(accountData, uidData)
+                navigate('/Home/banking');
+            } else {
+                console.log("Document data: 문서가 없습니다.");
             }
         }
-    };
+    });
 
+    const handleLogin = () => {
+        loginMutation.mutate();
+    };
 
     return (
         <>
             <div className="form-control mt-6">
                 <div>
-                    <button className="btn btn-primary w-full" onClick={Login}>
-                        Login
+                    <button className="btn btn-primary w-full" onClick={handleLogin}>
+                        {loginMutation.isLoading ? (<span className="loading loading-spinner"></span>) : 'Login'}
                     </button>
-                    <dialog id="my_modal_1" className="modal">
-                        <div className="modal-box">
-                            <h3 className="font-bold text-lg text-primary">로그인 실패</h3>
-                            <p className="py-4">이메일이나 비밀번호가 일치하지 않습니다.</p>
-                            <div className="modal-action">
-                                <form method="dialog">
-                                    <button className="btn">
-                                        닫기
-                                    </button>
-                                </form>
+                    {loginMutation.isError && (
+                        <dialog id="my_modal_1" className="modal">
+                            <div className="modal-box">
+                                <h3 className="font-bold text-lg text-primary">로그인 실패</h3>
+                                <p className="py-4">이메일이나 비밀번호가 일치하지 않습니다.</p>
+                                <div className="modal-action">
+                                    <form method="dialog">
+                                        <button className="btn">
+                                            닫기
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    </dialog>
+                        </dialog>
+                    )}
                 </div>
                 <label className="label justify-center mt-2">
                     <span className="text-sm mr-2">아직 회원이 아니라면 지금 바로</span>

@@ -9,7 +9,9 @@ import type { AccountHistoryItem } from '../../types/Types';
 
 
 const fetchAccountHistory = async (): Promise<AccountHistoryItem[]> => {
-    const data = await Api_fetchAccountHistory();
+    const userUid = localStorage.getItem('uid')
+    if (!userUid) return []
+    const data = await Api_fetchAccountHistory(userUid);
     return data || []; // 만약 data가 undefined이면 빈 배열을 반환
 };
 
@@ -67,24 +69,4 @@ export const TransferList = (): JSX.Element => {
         </div>
     );
 };
-
-
-
-
-
-        //        <>
-        //
-        //                  <div>
-        //                      {/* <Pagination
-        //                          activePage={currentPage}
-        //                          itemsCountPerPage={5}
-        //                          totalItemsCount={count}
-        //                          pageRangeDisplayed={5}
-        //                          prevPageText={"<"}
-        //                          nextPageText={">"}
-        //                          onChange={handlePageChange}
-
-        //                      /> */}
-        //                  </div>
-        // </>
 

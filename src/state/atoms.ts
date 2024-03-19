@@ -14,3 +14,7 @@ export const accountDataState = atom<AccountDataType>({
     categories: [],
   },
 });
+
+export const uidDataState = atom<string>({
+  key: "uidDataState",
+});

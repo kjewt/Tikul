@@ -9,9 +9,10 @@ import { LineChartSummary } from "./LineChartSummary";
 import { PieChartSummary } from "./PieChartSummary";
 
 
-
 const fetchSummaryData = async (): Promise<CategoryDataType[]> => {
-    const data = await Api_fetchSummaryData();
+    const userUid = localStorage.getItem('uid')
+    if (!userUid) return []
+    const data = await Api_fetchSummaryData(userUid);
     return data || [];
 };
 export const Summary = (): JSX.Element => {

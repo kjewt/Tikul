@@ -2,7 +2,6 @@ import { doc, getDoc, getDocs, addDoc, query, orderBy, updateDoc, collection } f
 import { db } from "../../firebase";
 import { AccountHistoryItem } from "../types/Types";
 
-
 type RegisterParamsType = {
     account: string;
     pw: string;
@@ -12,22 +11,16 @@ type RegisterParamsType = {
 }
 
 const storedUid = localStorage.getItem('uid');
-// const account = localStorage.getItem('account');
-// const accountData = account ? JSON.parse(account) : null;
 
-//새로 accountData 데이터를 받아와서 로컬에 저장시키는 메서드.
-export const Api_Update = () => {
+export const Api_Update = async () => {
     if (storedUid) {
         const userRef = doc(db, "users", storedUid);
-        getDoc(userRef).then((doc: any) => {
-            if (doc.exists) {
-                localStorage.setItem('account', JSON.stringify(doc.data()));
-
-            } else {
-                console.log("Document data: 문서가 없습니다.");
-            }
-        });
+        const docSnap = await getDoc(userRef);
+        if (docSnap.exists()) {
+            return docSnap.data();
+        }
     }
+    return null;
 }
 
 export const Api_Register = async ({ account, pw, bank, name, navigate }: RegisterParamsType) => {
@@ -53,13 +46,13 @@ export const Api_Register = async ({ account, pw, bank, name, navigate }: Regist
     }
 };
 
-export const Api_fetchAccountHistory = async () => {
+export const Api_fetchAccountHistory = async (uid: string) => {
     try {
-        if (!storedUid) {
+        if (!uid) {
             return alert("거래내역을 가져오기 위해 로그인이 필요합니다.");
         }
 
-        const listRef = collection(db, "users", storedUid, "transferList");
+        const listRef = collection(db, "users", uid, "transferList");
 
         const listQuerySnapshot = await getDocs(listRef);
 
