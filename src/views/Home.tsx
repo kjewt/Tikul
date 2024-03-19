@@ -4,7 +4,6 @@ import { Outlet, Link } from 'react-router-dom';
 import { Summary } from '../components/summary/Summary';
 import { useRecoilState } from 'recoil';
 import { accountDataState } from '../state/atoms';
-import { Api_Update } from '../api/InfoUtils';
 import type { AccountDataType } from '../types/Types';
 
 // const userUid = localStorage.getItem('uid')
@@ -22,7 +21,6 @@ export const Home = (): JSX.Element => {
         const fetchData = async () => {
             setAccountData(currentUser);
         };
-        // Api_Update()
         fetchData();
     }, []);
 
