@@ -24,9 +24,6 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
             if (docSnap.exists()) {
                 localStorage.setItem('uid', updatedUser.uid);
                 localStorage.setItem('account', JSON.stringify(docSnap.data()));
-                // setAccountData(docSnap.data() as AccountDataType);
-                // setUidData(updatedUser.uid);
-                // console.log(accountData, uidData)
                 navigate('/Home/banking');
             } else {
                 console.log("Document data: 문서가 없습니다.");

@@ -6,7 +6,6 @@ import { useRecoilState } from 'recoil';
 import { accountDataState } from '../../state/atoms';
 import { initialAccountData } from '../../state/staticData';
 
-
 export const NavBar = () => {
     const navigate = useNavigate();
     const [accountData, setAccountData] = useRecoilState(accountDataState)
@@ -30,7 +29,7 @@ export const NavBar = () => {
         navigate('/login');
 
     }, [])
-
+    console.log(accountData)
     return (
         <div>
 

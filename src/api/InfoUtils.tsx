@@ -10,9 +10,10 @@ type RegisterParamsType = {
     navigate: any;
 }
 
-const storedUid = localStorage.getItem('uid');
 
-export const Api_Update = async () => {
+// uid가 저장된 상태라면 user의 데이터를 리턴하는 함수
+export const Api_Update = async (storedUid: string) => {
+
     if (storedUid) {
         const userRef = doc(db, "users", storedUid);
         const docSnap = await getDoc(userRef);
@@ -20,11 +21,12 @@ export const Api_Update = async () => {
             return docSnap.data();
         }
     }
-    return null;
+    return {};
 }
 
 export const Api_Register = async ({ account, pw, bank, name, navigate }: RegisterParamsType) => {
     try {
+        const storedUid = localStorage.getItem('uid');
         if (storedUid) {
             const userData = {
                 IsRegister: true,
@@ -36,7 +38,7 @@ export const Api_Register = async ({ account, pw, bank, name, navigate }: Regist
 
             const userRef = doc(db, "users", storedUid);
             await updateDoc(userRef, userData);
-            Api_Update()
+            Api_Update(storedUid)
             alert("등록을 성공했습니다.");
             navigate('/home/banking');
         }

@@ -1,25 +1,35 @@
-// import { useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Summary } from '../components/summary/Summary';
 import { useRecoilState } from 'recoil';
 import { accountDataState } from '../state/atoms';
+import { Api_Update } from '../api/InfoUtils';
 import type { AccountDataType } from '../types/Types';
+import { initialAccountData } from '../state/staticData';
 
-// const userUid = localStorage.getItem('uid')
-// const fetchAccountData = async () => {
-//     const data = await Api_Update();
-//     return data || []; // 만약 data가 undefined이면 빈 배열을 반환
-// };
+export const fetchAccountData = async (): Promise<AccountDataType> => {
+    const userUid = localStorage.getItem("uid")
+    if (userUid) {
+        const data = await Api_Update(userUid);
+        return data as AccountDataType
+    }
+    return initialAccountData
+};
 
 export const Home = (): JSX.Element => {
+    const { data: freshAccountData } = useQuery<AccountDataType>("fetchAccountData", fetchAccountData)
     const [, setAccountData] = useRecoilState(accountDataState);
-    const currentUser = JSON.parse(localStorage.getItem("account") || '{}') as AccountDataType;
 
-    const isRegister = currentUser.IsRegister
+    const isRegister = freshAccountData?.IsRegister
+
     useEffect(() => {
         const fetchData = async () => {
-            setAccountData(currentUser);
+            if (freshAccountData) {
+                setAccountData(freshAccountData);
+                console.log(freshAccountData)
+                console.log("home 화면에서 실행되었습니다.")
+            }
         };
         fetchData();
     }, []);

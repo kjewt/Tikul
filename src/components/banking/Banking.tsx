@@ -1,20 +1,23 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TransferList } from './TransferList';
 import { Alert } from '../common/Alert';
 import { NumberFormat } from '../../business/NumberFormat';
-import { useRecoilState } from 'recoil';
-import { accountDataState } from "../../state/atoms";
-import { useState } from 'react';
+import { useQueryClient } from "react-query"
+import type { AccountDataType } from '../../types/Types';
 
 export const Banking = (): JSX.Element => {
-    const [accountData] = useRecoilState(accountDataState);
     const [isCopied, setIsCopied] = useState<boolean>(false);
+    const queryClient = useQueryClient();
+    const freshAccountData = queryClient.getQueryData<AccountDataType>("fetchAccountData");
 
-    console.log(accountData)
+    if (!freshAccountData) return (<span> 데이터를 불러올 수 없습니다.</span>)
+
+
 
     const copyToClipboard = async () => {
         try {
-            const infoToCopy = `${accountData.bank} ${accountData.name} ${accountData.account}`;
+            const infoToCopy = `${freshAccountData.bank} ${freshAccountData.name} ${freshAccountData.account}`;
             await navigator.clipboard.writeText(infoToCopy);
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 1500);
@@ -34,11 +37,11 @@ export const Banking = (): JSX.Element => {
                 <div className="card w-full mb-10 bg-accent shadow-xl">
                     <div className="m-3 rounded-xl bg-base-100">
                         <button className="user-account p-4 text-sm badge badge-secondary m-4 cursor-pointer" onClick={copyToClipboard}>
-                            <span>{accountData.name}님의 계좌 |</span>
-                            <span className="p-1">{accountData.bank}</span>
-                            <span className="p-1">{accountData.account}</span>
+                            <span>{freshAccountData.name}님의 계좌 |</span>
+                            <span className="p-1">{freshAccountData.bank}</span>
+                            <span className="p-1">{freshAccountData.account}</span>
                         </button>
-                        <div className="account-balance px-4 text-right text-xl">{NumberFormat(accountData.balance)}원</div>
+                        <div className="account-balance px-4 text-right text-xl">{NumberFormat(freshAccountData.balance)}원</div>
                         <div className="btn-banking p-4">
                             <Link to="/home/transfer" className="btn btn-primary text-base-100 w-full">송금</Link>
                         </div>

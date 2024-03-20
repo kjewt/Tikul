@@ -12,7 +12,7 @@ const fetchAccountHistory = async (): Promise<AccountHistoryItem[]> => {
     const userUid = localStorage.getItem('uid')
     if (!userUid) return []
     const data = await Api_fetchAccountHistory(userUid);
-    return data || []; // 만약 data가 undefined이면 빈 배열을 반환
+    return data || [];
 };
 
 export const TransferList = (): JSX.Element => {

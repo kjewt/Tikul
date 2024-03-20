@@ -1,11 +1,10 @@
 
 
-import { getDocs, addDoc, query, orderBy, updateDoc, collection, where } from "firebase/firestore";
+import { getDocs, addDoc, getDoc, query, orderBy, updateDoc, collection, where, doc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { CategoryDataType } from "../types/Types";
+import { AccountDataType, CategoryDataType } from "../types/Types";
 import { categoriesStaticData } from "../state/staticData";
 
-const storedUid = localStorage.getItem('uid');
 
 // 요약 내역 생성 및 불러오기
 export const Api_fetchSummaryData = async (uid: string) => {
@@ -54,8 +53,9 @@ export const Api_fetchSummaryData = async (uid: string) => {
 // 요약 내역의 카테고리 이름 수정기능
 export const Api_EditCategory = async (oldCategory: string, newCategory: string) => {
     try {
+        const storedUid = localStorage.getItem('uid')
         if (!storedUid) {
-            return alert("요약 정보를 불러오는데 로그인이 필요합니다.");
+            return alert("카테고리 수정에 로그인이 필요합니다.");
         }
 
         const summaryQuery = query(collection(db, 'users', storedUid, 'summary'), where('category', '==', oldCategory));
@@ -63,12 +63,36 @@ export const Api_EditCategory = async (oldCategory: string, newCategory: string)
 
         if (!summarySnapshot.empty) {
 
-            // summary 컬렉션 내에서 category가 일치하는 문서의 참조 가져오기
             const summaryDocRef = summarySnapshot.docs[0].ref;
+
 
             await updateDoc(summaryDocRef, {
                 category: newCategory
             })
+
+            const userRef = doc(db, "users", storedUid);
+            const userDoc = await getDoc(userRef);
+            if (userDoc.exists()) {
+                const userData = { ...userDoc.data() } as AccountDataType;
+
+                if (userData.categories) {
+                    const updatedCategories = userData.categories.map(category => {
+                        if (category === oldCategory) {
+                            return newCategory;
+                        } else {
+                            return category;
+                        }
+                    });
+
+                    await updateDoc(userRef, {
+                        categories: updatedCategories
+                    });
+                }
+            } else {
+                console.log("해당 사용자 문서가 존재하지 않습니다.");
+            }
+
+
 
             alert("수정이 완료되었습니다.")
         }
