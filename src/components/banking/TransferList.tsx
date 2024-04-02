@@ -4,7 +4,7 @@
 import { useQuery } from 'react-query';
 import { Api_fetchAccountHistory } from "../../api/InfoUtils"
 import { NumberFormat } from '../../business/NumberFormat';
-// import { TimeFormatter } from '../../business/TimeFormatter';
+import { TimeFormatter } from '../../business/TimeFormatter';
 import type { AccountHistoryItem } from '../../types/Types';
 
 
@@ -19,6 +19,7 @@ export const TransferList = (): JSX.Element => {
     const { data: transferData, isLoading, isError } = useQuery('accountHistory', fetchAccountHistory, {
         initialData: []
     });
+
 
 
     if (!transferData) {
@@ -40,19 +41,18 @@ export const TransferList = (): JSX.Element => {
 
     return (
         <div className="flex flex-col gap-3 mb-3 mx-3 rounded-xl bg-base-100 p-3">
-            <div className="h-8 rounded-xl bg-primary">필터링 영역</div>
             <div className="flex flex-col bg-base-100 rounded-xl text-base-100">
                 <div className="overflow-x-auto">
                     <table className="table  text-black">
                         <tbody>
                             {transferData.map((item: AccountHistoryItem, index) => (
                                 <tr key={String(index) + item.timestamp} className="flex gap-1 justify-between">
-                                    <td className="flex flex-col min-w-[73px]">
+                                    <td className="flex flex-col w-min-[73px]">
 
                                         <span className="pt-3" >{item.detail}</span>
-                                        <span className="text-sm opacity-50">{"시간"}</span>
+                                        <span className="text-sm opacity-50">{TimeFormatter(item.timestamp)}</span>
                                     </td>
-                                    <td className="flex flex-col gap-1 w-1/2">
+                                    <td className="flex flex-col gap-1">
                                         <span className="badge badge-ghost badge-sm p-2">{item.category}</span>
                                         <span className="text-sm opacity-50 p-2">{item.memo}</span>
                                     </td>

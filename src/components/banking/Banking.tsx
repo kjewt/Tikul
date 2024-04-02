@@ -3,13 +3,23 @@ import { Link } from 'react-router-dom';
 import { TransferList } from './TransferList';
 import { Alert } from '../common/Alert';
 import { NumberFormat } from '../../business/NumberFormat';
-import { useQueryClient } from "react-query"
+import { useQuery } from "react-query"
+import { Api_Update } from '../../api/InfoUtils';
 import type { AccountDataType } from '../../types/Types';
+import { initialAccountData } from '../../state/staticData';
+
+export const fetchAccountData = async (): Promise<AccountDataType> => {
+    const userUid = localStorage.getItem("uid")
+    if (userUid) {
+        const data = await Api_Update(userUid);
+        return data as AccountDataType
+    }
+    return initialAccountData
+};
 
 export const Banking = (): JSX.Element => {
     const [isCopied, setIsCopied] = useState<boolean>(false);
-    const queryClient = useQueryClient();
-    const freshAccountData = queryClient.getQueryData<AccountDataType>("fetchAccountData");
+    const { data: freshAccountData } = useQuery<AccountDataType>("fetchAccountData", fetchAccountData)
 
     if (!freshAccountData) return (<span> 데이터를 불러올 수 없습니다.</span>)
 

@@ -1,7 +1,7 @@
 import { doc, getDoc, getDocs, addDoc, query, updateDoc, collection, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useMutation } from "react-query";
-import { AccountHistoryItem, TransferDataType } from "../types/Types";
+import { AccountSendHistoryItem, TransferDataType } from "../types/Types";
 
 const storedUid = localStorage.getItem('uid');
 
@@ -67,9 +67,9 @@ export const Api_transferMutation = () => {
                         category: transferInfoProps.category,
                         detail: receiverName, // 받는 사람 이름
                         memo: transferInfoProps.memo,
-                        timestamp: new Date(),
+                        timestamp: new Date,
                         transactionType: "송금"
-                    } as AccountHistoryItem;
+                    } as AccountSendHistoryItem;
 
                     // 보내는 유저의 "transferList" 컬렉션에 송금 내역 추가
                     await addDoc(currentUserDetailsRef, addTransaction);
@@ -89,7 +89,7 @@ export const Api_transferMutation = () => {
                         memo: transferInfoProps.memo,
                         timestamp: new Date(),
                         transactionType: "입금"
-                    } as AccountHistoryItem);
+                    } as AccountSendHistoryItem);
 
                     // 받는 유저의 잔액 업데이트
                     const receiverRef = doc(db, 'users', receiverDoc.id);

@@ -18,6 +18,7 @@ export const Api_Update = async (storedUid: string) => {
         const userRef = doc(db, "users", storedUid);
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
+            localStorage.setItem('account', JSON.stringify(docSnap.data()));
             return docSnap.data();
         }
     }

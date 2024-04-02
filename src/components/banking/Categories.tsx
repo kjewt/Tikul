@@ -1,24 +1,32 @@
 import { useCallback, useState } from "react"
-import { useRecoilState } from 'recoil';
-import { accountDataState } from "../../state/atoms"
-import type { CategoryProps } from '../../types/Types';
+import { useQueryClient } from "react-query";
+
+import type { CategoryProps, AccountDataType } from '../../types/Types';
 
 export const Categories = ({ onCategoryChange }: CategoryProps): JSX.Element => {
-    const [accountData] = useRecoilState(accountDataState);
     const [, setCategory] = useState("기타")
-    const categories = accountData.categories
+    const queryClient = useQueryClient();
+    const freshAccountData = queryClient.getQueryData<AccountDataType>("fetchAccountData");
+
+    if (!freshAccountData) return <div>카테고리 정보가 없습니다.</div>
+
+    const categories = freshAccountData.categories
 
     const handleCategoryChange = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-        const clickedCategory = event.currentTarget.innerText;
-        setCategory(clickedCategory);
-        onCategoryChange({ value: clickedCategory, valid: true })
+        const clickedCategory = event.currentTarget.textContent;
+        if (clickedCategory) {
 
-        const allButtons = document.querySelectorAll(".btn");
-        allButtons.forEach(button => button.classList.remove("btn-accent"));
+            setCategory(clickedCategory);
+            onCategoryChange({ value: clickedCategory, valid: true })
 
-        event.currentTarget.classList.add('btn-accent');
+            const allButtons = document.querySelectorAll(".btn");
+            allButtons.forEach(button => button.classList.remove("btn-accent"));
+
+            event.currentTarget.classList.add('btn-accent');
+        }
     }, [onCategoryChange]);
 
+    console.log(categories)
 
 
 

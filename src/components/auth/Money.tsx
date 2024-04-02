@@ -1,18 +1,20 @@
 import { useState, useCallback } from 'react';
-import { useRecoilState } from 'recoil';
-import { accountDataState } from "../../state/atoms"
+import { useQueryClient } from 'react-query';
 import { NumberFormat } from '../../business/NumberFormat';
-import type { MoneyProps } from '../../types/Types';
+import type { MoneyProps, AccountDataType } from '../../types/Types';
 
 export const Money = ({ onMoneyChange }: MoneyProps): JSX.Element => {
-    const [accountData] = useRecoilState(accountDataState);
+    const queryClient = useQueryClient();
+    const freshAccountData = queryClient.getQueryData<AccountDataType>("fetchAccountData");
     const [money, setMoney] = useState<number>(0);
-    const isValid = money <= accountData.balance
+
+    if (!freshAccountData) return (<span> 데이터를 불러올 수 없습니다.</span>)
+    const isValid = money <= freshAccountData.balance
 
     const handleMoneyChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const rawMoney = event.target.value.replace(/[^0-9]/g, "");
         setMoney(Number(rawMoney));
-        onMoneyChange({ value: rawMoney, valid: accountData.balance >= Number(rawMoney) });
+        onMoneyChange({ value: rawMoney, valid: freshAccountData.balance >= Number(rawMoney) });
     }, [money])
 
 
@@ -21,12 +23,12 @@ export const Money = ({ onMoneyChange }: MoneyProps): JSX.Element => {
     const handleMoneyAdd = (num: number) => {
         const amount = money + num
         setMoney(amount);
-        onMoneyChange({ value: String(amount), valid: accountData.balance >= money })
+        onMoneyChange({ value: String(amount), valid: freshAccountData.balance >= money })
     };
 
     const handleMaxAmount = () => {
-        setMoney(accountData.balance);
-        onMoneyChange({ value: String(accountData.balance), valid: accountData.balance >= money })
+        setMoney(freshAccountData.balance);
+        onMoneyChange({ value: String(freshAccountData.balance), valid: freshAccountData.balance >= money })
     };
 
     return (
@@ -36,7 +38,7 @@ export const Money = ({ onMoneyChange }: MoneyProps): JSX.Element => {
                     <span className="label-text">입금 금액</span>
 
                     <span className={`label-text text-primary font-bold ${!isValid ? 'animate-bounce text-red-500' : ''}`}>
-                        잔액: {NumberFormat(accountData.balance)}
+                        잔액: {NumberFormat(freshAccountData.balance)}
                     </span>
 
                 </label>

@@ -39,7 +39,6 @@ export const Api_fetchSummaryData = async (uid: string) => {
                 const item = doc.data();
                 summaryData.push(item as CategoryDataType);
             });
-            console.log(summaryData)
             return summaryData;
         }
     } catch (error) {

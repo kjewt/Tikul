@@ -2,34 +2,36 @@ import { useCallback, useEffect, useState } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { Logout } from '../../business/Logout';
-import { useRecoilState } from 'recoil';
-import { accountDataState } from '../../state/atoms';
-import { initialAccountData } from '../../state/staticData';
+import { useQueryClient } from 'react-query';
 
 export const NavBar = () => {
     const navigate = useNavigate();
-    const [accountData, setAccountData] = useRecoilState(accountDataState)
+    const queryClient = useQueryClient();
     const [, setIsOpen] = useState(false)
 
+    const handleLogout = useCallback(() => {
+        queryClient.removeQueries("fetchAccountData");
+        Logout();
+        navigate('/login');
+
+    }, [])
 
     const storedAccountData = localStorage.getItem('account');
     const storedUid = localStorage.getItem('uid');
+
     useEffect(() => {
 
         if (!storedUid && !storedAccountData) {
             navigate('/login');
         }
-
-
     }, []);
 
-    const handleLogout = useCallback(() => {
-        setAccountData(initialAccountData)
-        Logout();
-        navigate('/login');
+    if (!storedAccountData) return
 
-    }, [])
-    console.log(accountData)
+    const userAccountData = JSON.parse(storedAccountData)
+
+
+
     return (
         <div>
 
@@ -41,7 +43,7 @@ export const NavBar = () => {
                 </div>
                 {storedUid && <div className="flex-none">
                     <div>
-                        {accountData.name ? accountData.name : accountData.email}
+                        {(userAccountData?.name) ? userAccountData.name : userAccountData?.email}
                     </div>
                     <div className="dropdown dropdown-bottom dropdown-end">
                         <button tabIndex={0} className="btn btn-ghost hover:bg-transparent"><FaUserCircle className="text-2xl" /></button>

@@ -1,3 +1,5 @@
+import {Timestamp} from "firebase/firestore";
+
 export type ChildrenValue = {
   value: string;
   valid: boolean;
@@ -84,6 +86,15 @@ export type AccountDataType = {
 };
 
 export type AccountHistoryItem = {
+  timestamp: Timestamp;
+  detail: string;
+  memo: string;
+  transactionType: string;
+  category: string;
+  amount: number;
+};
+
+export type AccountSendHistoryItem = {
   timestamp: Date;
   detail: string;
   memo: string;

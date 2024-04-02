@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { accountDataState } from "../../state/atoms"
 import { TransferInfo } from './TransferInfo';
+import { useQueryClient } from 'react-query';
+import type { AccountDataType } from '../../types/Types';
 
 export const Transfer = (): JSX.Element => {
-    const [accountData] = useRecoilState(accountDataState);
+    const queryClient = useQueryClient();
+    const freshAccountData = queryClient.getQueryData<AccountDataType>("fetchAccountData");
+
+    if (!freshAccountData) return (<span> 데이터를 불러올 수 없습니다.</span>)
 
     return (
         <div className="container min-h-screen">
@@ -19,8 +22,8 @@ export const Transfer = (): JSX.Element => {
                         <div className="user-account px-4 pt-4 text-sm font-bold">
                             <div className="border-b border-accent flex justify-center">
                                 <span>내 계좌 | &nbsp;</span>
-                                <span className="">{accountData.bank}&nbsp;</span>
-                                <span className="">{accountData.account}</span>
+                                <span className="">{freshAccountData.bank}&nbsp;</span>
+                                <span className="">{freshAccountData.account}</span>
                             </div>
                             <div className="flex justify-center p-4">📍송금할 계좌 정보를 입력하세요.</div>
                         </div>

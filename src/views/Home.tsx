@@ -1,9 +1,6 @@
 import { useQuery } from 'react-query';
-import { useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Summary } from '../components/summary/Summary';
-import { useRecoilState } from 'recoil';
-import { accountDataState } from '../state/atoms';
 import { Api_Update } from '../api/InfoUtils';
 import type { AccountDataType } from '../types/Types';
 import { initialAccountData } from '../state/staticData';
@@ -18,32 +15,16 @@ export const fetchAccountData = async (): Promise<AccountDataType> => {
 };
 
 export const Home = (): JSX.Element => {
-    const { data: freshAccountData } = useQuery<AccountDataType>("fetchAccountData", fetchAccountData)
-    const [, setAccountData] = useRecoilState(accountDataState);
+    const { data: freshAccountData, isLoading } = useQuery<AccountDataType>("fetchAccountData", fetchAccountData)
 
     const isRegister = freshAccountData?.IsRegister
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (freshAccountData) {
-                setAccountData(freshAccountData);
-                console.log(freshAccountData)
-                console.log("home 화면에서 실행되었습니다.")
-            }
-        };
-        fetchData();
-    }, []);
+    const uid = localStorage.getItem('uid')
 
 
     return (
         <div className="container min-h-screen">
             <div className={`grid ${isRegister ? "grid-cols-2" : null} gap-8`}>
-                {isRegister ? (
-                    <>
-                        <Summary />
-                        <Outlet />
-                    </>
-                ) : (
+                {!uid ? (
                     <>
                         <div className="py-32">
                             계좌를 먼저
@@ -52,7 +33,17 @@ export const Home = (): JSX.Element => {
                             </Link>
                         </div>
                     </>
-                )}
+                ) : isLoading ?
+                    (<div className="flex justify-center p-20">
+                        <span className="loading loading-spinner loading-lg text-primary"></span>
+                        <span>로딩 중입니다.</span>
+                    </div>) :
+                    (
+                        <>
+                            <Summary />
+                            <Outlet />
+                        </>
+                    )}
             </div>
         </div>
     );
