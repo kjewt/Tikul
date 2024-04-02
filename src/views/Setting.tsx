@@ -1,15 +1,17 @@
-// import { Link } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { accountDataState } from '../state/atoms';
+import { useQueryClient } from 'react-query';
 import { EditInfo } from '../components/setting/EditInfo';
 import { RegisterInfo } from '../components/setting/RegisterInfo';
+import type { AccountDataType } from '../types/Types';
 
 const Setting = (): JSX.Element => {
-    const [accountData] = useRecoilState(accountDataState);
+    const queryClient = useQueryClient()
+    const freshAccountData = queryClient.getQueryData<AccountDataType>("fetchAccountData");
+    if (!freshAccountData) return (<div className="flex justify-center p-3">로그인이 필요한 서비스입니다.</div>)
+
 
     return (
         <>
-            {accountData.IsRegister ? <EditInfo /> : <RegisterInfo />}
+            {freshAccountData.IsRegister ? <EditInfo /> : <RegisterInfo />}
         </>
     );
 };
