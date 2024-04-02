@@ -32,8 +32,8 @@ const Login = (): JSX.Element => {
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div className="card-body p">
               <form>
-                <Email onEmailChange={handleEmailChange} />
-                <Password onPasswordChange={handlePasswordChange} />
+                <Email onValueChange={handleEmailChange} />
+                <Password onValueChange={handlePasswordChange} />
               </form>
               <BtnLogin email={email.value} password={password.value} />
               <div className="flex items-center justify-around">

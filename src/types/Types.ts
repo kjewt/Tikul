@@ -9,6 +9,10 @@ export type ValueProps = {
   onValueChange: (childValue: ChildrenValue) => void;
 };
 
+export type CbxProps = {
+  onCbxChange: (value: boolean) => void;
+};
+
 export type CategoryDataType = {
   category: string;
   thisMonth: number;

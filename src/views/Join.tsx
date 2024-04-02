@@ -37,7 +37,7 @@ const Join = (): JSX.Element => {
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <div className="card-body">
-                            <Email onEmailChange={handleEmailChange} />
+                            <Email onValueChange={handleEmailChange} />
                             <PasswordCheck onValueChange={handlePasswordChange} />
 
                             <div className="flex items-center justify-around">

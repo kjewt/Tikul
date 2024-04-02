@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { isEmailValid } from '../../business/valid/EmailValid';
-import type { EmailProps } from '../../types/Types';
+import type { ValueProps } from '../../types/Types';
 
-export const Email = ({ onEmailChange }: EmailProps): JSX.Element => {
+export const Email = ({ onValueChange }: ValueProps): JSX.Element => {
     const [email, setEmail] = useState<string>("")
     const isValid = isEmailValid(email)
     const isError = !(isValid || (email === ""))
@@ -10,7 +10,7 @@ export const Email = ({ onEmailChange }: EmailProps): JSX.Element => {
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newEmail = event.target.value
         setEmail(newEmail)
-        onEmailChange({ value: newEmail, valid: isEmailValid(newEmail) })
+        onValueChange({ value: newEmail, valid: isEmailValid(newEmail) })
     };
 
     return (

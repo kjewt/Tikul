@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { AccountValid } from '../../business/valid/AccountValid';
-import type { AccountProps } from '../../types/Types';
+import type { ValueProps } from '../../types/Types';
 
 
-export const Account = ({ onAccountChange }: AccountProps): JSX.Element => {
+export const Account = ({ onValueChange }: ValueProps): JSX.Element => {
     const [account, setAccount] = useState("");
     const isValid = AccountValid(account)
     const isError = !isValid && (account !== "")
@@ -11,7 +11,7 @@ export const Account = ({ onAccountChange }: AccountProps): JSX.Element => {
     const handleAccountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const userAccount = event.target.value.replace(/\s/g, '').slice(0, 13);
         setAccount(userAccount)
-        onAccountChange({ value: userAccount, valid: AccountValid(userAccount) })
+        onValueChange({ value: userAccount, valid: AccountValid(userAccount) })
     };
 
 

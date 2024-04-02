@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import { PwValid } from '../../business/valid/PwValid';
-import { PasswordProps } from '../../types/Types';
+import { ValueProps } from '../../types/Types';
 
-export const Password = ({ onPasswordChange }: PasswordProps): JSX.Element => {
+export const Password = ({ onValueChange }: ValueProps): JSX.Element => {
     const [password, setPassword] = useState<string>("")
 
     const handlePasswordChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const newPassword = event.target.value
         setPassword(newPassword);
-        onPasswordChange({ value: newPassword, valid: PwValid(newPassword) })
+        onValueChange({ value: newPassword, valid: PwValid(newPassword) })
     }, [password])
 
 
