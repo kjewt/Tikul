@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react"
 import { useQueryClient } from "react-query";
 
-import type { CategoryProps, AccountDataType } from '../../types/Types';
+import type { ValueProps, AccountDataType } from '../../types/Types';
 
-export const Categories = ({ onCategoryChange }: CategoryProps): JSX.Element => {
+export const Categories = ({ onValueChange }: ValueProps): JSX.Element => {
     const [, setCategory] = useState("기타")
     const queryClient = useQueryClient();
     const freshAccountData = queryClient.getQueryData<AccountDataType>("fetchAccountData");
@@ -17,14 +17,14 @@ export const Categories = ({ onCategoryChange }: CategoryProps): JSX.Element => 
         if (clickedCategory) {
 
             setCategory(clickedCategory);
-            onCategoryChange({ value: clickedCategory, valid: true })
+            onValueChange({ value: clickedCategory, valid: true })
 
             const allButtons = document.querySelectorAll(".btn");
             allButtons.forEach(button => button.classList.remove("btn-accent"));
 
             event.currentTarget.classList.add('btn-accent');
         }
-    }, [onCategoryChange]);
+    }, [onValueChange]);
 
     console.log(categories)
 

@@ -5,43 +5,8 @@ export type ChildrenValue = {
   valid: boolean;
 };
 
-export type EmailProps = {
-  onEmailChange: (childValue: ChildrenValue) => void;
-};
-
-export type PasswordProps = {
-  onPasswordChange: (childValue: ChildrenValue) => void;
-};
-
-export type CbxProps = {
-  onCbxChange: (value: boolean) => void;
-};
-
-export type NameProps = {
-  onNameChange: (childValue: ChildrenValue) => void;
-};
-
-export type AccountProps = {
-  onAccountChange: (childValue: ChildrenValue) => void;
-};
-export type AccountPWProps = {
-  onAccountPWChange: (childValue: ChildrenValue) => void;
-};
-
-export type BankProps = {
-  onBankChange: (childValue: ChildrenValue) => void;
-};
-
-export type MoneyProps = {
-  onMoneyChange: (childValue: ChildrenValue) => void;
-};
-
-export type CategoryProps = {
-  onCategoryChange: (childValue: ChildrenValue) => void;
-};
-
-export type MemoProps = {
-  onMemoChange: (childValue: ChildrenValue) => void;
+export type ValueProps = {
+  onValueChange: (childValue: ChildrenValue) => void;
 };
 
 export type CategoryDataType = {

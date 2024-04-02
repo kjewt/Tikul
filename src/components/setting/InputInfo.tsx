@@ -52,10 +52,10 @@ export const InputInfo = () => {
             <form>
                 <div className="flex items-center justify-center mt-8">
                     <div className="w-[330px] mb-16">
-                        <Name onNameChange={handleName} />
-                        <Account onAccountChange={handleAccount} />
-                        <Bank onBankChange={handleBank} />
-                        <AccountPWCheck onAccountPWChange={handleAccountPW} />
+                        <Name onValueChange={handleName} />
+                        <Account onValueChange={handleAccount} />
+                        <Bank onValueChange={handleBank} />
+                        <AccountPWCheck onValueChange={handleAccountPW} />
                         <button disabled={!validTest} className="btn btn-primary w-full mt-6" onClick={handleOpenModal}>등록하기</button>
 
 

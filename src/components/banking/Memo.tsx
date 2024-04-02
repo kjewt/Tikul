@@ -1,14 +1,14 @@
 import { useState, useCallback } from "react"
-import type { MemoProps } from "../../types/Types"
+import type { ValueProps } from "../../types/Types"
 
-export const Memo = ({ onMemoChange }: MemoProps) => {
+export const Memo = ({ onValueChange }: ValueProps) => {
     const [memo, setMemo] = useState("")
 
     const handleMemoChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const content = event.target.value
         if (content.length > 20) return
         setMemo(content)
-        onMemoChange({ value: content, valid: true })
+        onValueChange({ value: content, valid: true })
     }, [])
 
 

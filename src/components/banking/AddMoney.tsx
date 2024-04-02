@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import AddMoneyInput from './AddMoneyInput';
 
 export const AddMoney = (): JSX.Element => {
 

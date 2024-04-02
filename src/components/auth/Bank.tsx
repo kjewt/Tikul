@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { FaChevronDown } from "react-icons/fa";
-import { BankProps } from '../../types/Types';
+import { ValueProps } from '../../types/Types';
 
-export const Bank = ({ onBankChange }: BankProps): JSX.Element => {
+export const Bank = ({ onValueChange }: ValueProps): JSX.Element => {
     const [selectedBank, setSelectedBank] = useState<string>("");
     const [isOpen, setIsOpen] = useState(false);
     const bankNames = ['NH농협', 'KB국민', '신한', '우리', 'IBK기업', '하나', '새마을금고', '카카오뱅크', '토스뱅크', '케이뱅크', '부산', '대구', '신협', 'SC제일', '씨티'];
 
     const handleItemClick = (item: string) => {
         setSelectedBank(item);
-        onBankChange({ value: item, valid: true })
+        onValueChange({ value: item, valid: true })
         setIsOpen(false);
 
     };
@@ -20,7 +20,6 @@ export const Bank = ({ onBankChange }: BankProps): JSX.Element => {
 
     return (
         <>
-            {/* 은행선택 드롭다운 */}
             <div className="form-control">
                 <label className="label">
                     <span className="label-text">은행 선택</span>

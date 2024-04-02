@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import type { NameProps } from '../../types/Types';
+import type { ValueProps } from '../../types/Types';
 
 
-export const Name = ({ onNameChange }: NameProps): JSX.Element => {
+export const Name = ({ onValueChange }: ValueProps): JSX.Element => {
     const [name, setName] = useState("");
     const valid = name.length >= 2
     const isError = !valid && name !== ""
@@ -10,7 +10,7 @@ export const Name = ({ onNameChange }: NameProps): JSX.Element => {
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const userName = event.target.value.replace(/\s/g, '').slice(0, 13);
         setName(userName)
-        onNameChange({ value: userName, valid: valid })
+        onValueChange({ value: userName, valid: valid })
     };
 
 

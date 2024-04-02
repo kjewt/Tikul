@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { AccountPwValid } from '../../business/valid/AccountPwValid';
 import { PwDoubleCheckValid } from '../../business/valid/PwDoubleCheckValid';
-import { AccountPWProps } from '../../types/Types';
+import { ValueProps } from '../../types/Types';
 
 
 
-export const AccountPWCheck = ({ onAccountPWChange }: AccountPWProps): JSX.Element => {
+export const AccountPWCheck = ({ onValueChange }: ValueProps): JSX.Element => {
     const [accountPassword, setAccountPassword] = useState<string>("")
     const [comparingPassword, setComparingPassword] = useState<string>("")
 
@@ -22,7 +22,7 @@ export const AccountPWCheck = ({ onAccountPWChange }: AccountPWProps): JSX.Eleme
     const handleAccountPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const pw = event.target.value.replace(/\D/g, '').slice(0, 6);
         setComparingPassword(pw)
-        onAccountPWChange({ value: pw, valid: PwDoubleCheckValid(accountPassword, pw) })
+        onValueChange({ value: pw, valid: PwDoubleCheckValid(accountPassword, pw) })
     };
 
     return (

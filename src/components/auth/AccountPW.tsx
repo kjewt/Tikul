@@ -15,7 +15,6 @@ export const AccountPW = ({ onAccountPWChange, width }: PropsType): JSX.Element 
     const MAX_ACCOUNTPW_LENGTH = 6;
 
     useEffect(() => {
-        // 입력이 6자리가 되면 KeyPad 닫기
         if (accountPassword.length === MAX_ACCOUNTPW_LENGTH) {
             setIsKeyPadOpen(false);
         }
@@ -27,7 +26,6 @@ export const AccountPW = ({ onAccountPWChange, width }: PropsType): JSX.Element 
         setAccountPassword(num);
         onAccountPWChange({ value: num, valid: AccountPwValid(num) });
 
-        // 입력이 6자리가 되면 KeyPad 닫기
         if (num.length === MAX_ACCOUNTPW_LENGTH) {
             setIsKeyPadOpen(false);
         }
@@ -35,7 +33,6 @@ export const AccountPW = ({ onAccountPWChange, width }: PropsType): JSX.Element 
 
     const handleInputClick = () => {
         setIsKeyPadOpen(true);
-        // 6자리가 입력된 상태에서 다시 input 클릭하면 KeyPad 열기
         if (accountPassword.length === MAX_ACCOUNTPW_LENGTH) {
             setAccountPassword("");
         }

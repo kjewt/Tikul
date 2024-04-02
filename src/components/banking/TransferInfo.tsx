@@ -61,11 +61,11 @@ export const TransferInfo = (): JSX.Element => {
         <form onSubmit={handleSubmit}>
             <div className="flex items-center justify-center">
                 <div className="w-[330px] mb-16">
-                    <Account onAccountChange={handleAccount} />
-                    <Bank onBankChange={handleBank} />
-                    <Money onMoneyChange={handleMoney} />
-                    <Categories onCategoryChange={handleCategory} />
-                    <Memo onMemoChange={handleMemo} />
+                    <Account onValueChange={handleAccount} />
+                    <Bank onValueChange={handleBank} />
+                    <Money onValueChange={handleMoney} />
+                    <Categories onValueChange={handleCategory} />
+                    <Memo onValueChange={handleMemo} />
                     <AccountPW onAccountPWChange={handleAccountPW} />
                     <BtnTransfer transferInfoProps={transferInfo} />
 

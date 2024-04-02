@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 import { NumberFormat } from '../../business/NumberFormat';
-import type { MoneyProps, AccountDataType } from '../../types/Types';
+import type { ValueProps, AccountDataType } from '../../types/Types';
 
-export const Money = ({ onMoneyChange }: MoneyProps): JSX.Element => {
+export const Money = ({ onValueChange }: ValueProps): JSX.Element => {
     const queryClient = useQueryClient();
     const freshAccountData = queryClient.getQueryData<AccountDataType>("fetchAccountData");
     const [money, setMoney] = useState<number>(0);
@@ -14,7 +14,7 @@ export const Money = ({ onMoneyChange }: MoneyProps): JSX.Element => {
     const handleMoneyChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const rawMoney = event.target.value.replace(/[^0-9]/g, "");
         setMoney(Number(rawMoney));
-        onMoneyChange({ value: rawMoney, valid: freshAccountData.balance >= Number(rawMoney) });
+        onValueChange({ value: rawMoney, valid: freshAccountData.balance >= Number(rawMoney) });
     }, [money])
 
 
@@ -23,12 +23,12 @@ export const Money = ({ onMoneyChange }: MoneyProps): JSX.Element => {
     const handleMoneyAdd = (num: number) => {
         const amount = money + num
         setMoney(amount);
-        onMoneyChange({ value: String(amount), valid: freshAccountData.balance >= money })
+        onValueChange({ value: String(amount), valid: freshAccountData.balance >= money })
     };
 
     const handleMaxAmount = () => {
         setMoney(freshAccountData.balance);
-        onMoneyChange({ value: String(freshAccountData.balance), valid: freshAccountData.balance >= money })
+        onValueChange({ value: String(freshAccountData.balance), valid: freshAccountData.balance >= money })
     };
 
     return (
