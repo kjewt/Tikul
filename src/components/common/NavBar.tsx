@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { Logout } from '../../business/Logout';
@@ -7,7 +7,6 @@ import { useQueryClient } from 'react-query';
 export const NavBar = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const [, setIsOpen] = useState(false)
 
     const handleLogout = useCallback(() => {
         queryClient.removeQueries("fetchAccountData");
@@ -25,8 +24,19 @@ export const NavBar = () => {
             navigate('/login');
         }
     }, []);
+    useEffect(() => {
+        const clearLocalStorage = () => {
+            localStorage.clear();
+        };
 
-    if (!storedAccountData) return
+        window.addEventListener('beforeunload', clearLocalStorage);
+
+        return () => {
+            window.removeEventListener('beforeunload', clearLocalStorage);
+        };
+    }, []);
+
+    if (!storedAccountData) return null
 
     const userAccountData = JSON.parse(storedAccountData)
 
@@ -49,7 +59,7 @@ export const NavBar = () => {
                         <button tabIndex={0} className="btn btn-ghost hover:bg-transparent"><FaUserCircle className="text-2xl" /></button>
                         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                             <ul>
-                                <li><Link to="/setting" onClick={(prev) => setIsOpen(!prev)}>설정</Link></li>
+                                <li><Link to="/setting">설정</Link></li>
                                 <li><div onClick={handleLogout}>로그아웃</div></li>
                             </ul>                        </ul>
                     </div>

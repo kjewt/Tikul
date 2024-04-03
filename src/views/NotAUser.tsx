@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
-import { NavBar } from '../components/common/NavBar'
-const NotAUser = () => {
+
+export const NotAUser = () => {
     return (
         <>
-            <NavBar />
             <div className="flex flex-col p-10 items-center">
                 <span>사용자 정보가 없습니다.</span>
                 <Link to="/login">
@@ -13,5 +12,3 @@ const NotAUser = () => {
         </>
     )
 }
-
-export default NotAUser

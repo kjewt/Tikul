@@ -1,14 +1,16 @@
-// import Filtering from '../common/Filtering';
-// import Pagination from "react-js-pagination";
-// import '../../assets/css/paging.css'
+
+import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query';
 import { Api_fetchAccountHistory } from "../../api/InfoUtils"
 import { NumberFormat } from '../../business/NumberFormat';
 import { TimeFormatter } from '../../business/TimeFormatter';
 import type { AccountHistoryItem } from '../../types/Types';
+import Pagination from "react-js-pagination";
+import '../../assets/css/paging.css'
 
 
 const fetchAccountHistory = async (): Promise<AccountHistoryItem[]> => {
+
     const userUid = localStorage.getItem('uid')
     if (!userUid) return []
     const data = await Api_fetchAccountHistory(userUid);
@@ -19,7 +21,19 @@ export const TransferList = (): JSX.Element => {
     const { data: transferData, isLoading, isError } = useQuery('accountHistory', fetchAccountHistory, {
         initialData: []
     });
+    const [page, setPage] = useState<number>(1)
+    const [currentPost, setCurrentPost] = useState<AccountHistoryItem[] | undefined>(transferData)
+    const postPerPage = 5
+    const indexOfLastPost = page * postPerPage
+    const indexOfFirstPost = indexOfLastPost - postPerPage
 
+    const handlePageChange = (page: number) => {
+        setPage(page);
+    };
+
+    useEffect(() => {
+        setCurrentPost(transferData?.slice(indexOfFirstPost, indexOfLastPost))
+    }, [transferData, page])
 
 
     if (!transferData) {
@@ -45,7 +59,7 @@ export const TransferList = (): JSX.Element => {
                 <div className="overflow-x-auto">
                     <table className="table  text-black">
                         <tbody>
-                            {transferData.map((item: AccountHistoryItem, index) => (
+                            {currentPost?.map((item: AccountHistoryItem, index) => (
                                 <tr key={String(index) + item.timestamp} className="flex gap-1 justify-between">
                                     <td className="flex flex-col w-min-[73px]">
 
@@ -62,6 +76,15 @@ export const TransferList = (): JSX.Element => {
 
                         </tbody>
                     </table>
+                    <div>
+                        <Pagination
+                            activePage={page}
+                            itemsCountPerPage={5}
+                            totalItemsCount={transferData.length}
+                            pageRangeDisplayed={5}
+                            onChange={handlePageChange}
+                        />
+                    </div>
                 </div>
 
 

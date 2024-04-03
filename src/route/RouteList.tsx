@@ -4,7 +4,7 @@ import Join from '../views/Join';
 import { Home } from '../views/Home'
 import Setting from '../views/Setting'
 import TransactionDetail from '../views/TransactionDetail';
-import NotAUser from '../views/NotAUser';
+import { NotAUser } from '../views/NotAUser';
 import { Banking } from '../components/banking/Banking';
 import { Transfer } from '../components/banking/Transfer';
 import { AddMoney } from '../components/banking/AddMoney';
