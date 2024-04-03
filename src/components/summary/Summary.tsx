@@ -5,7 +5,6 @@ import { RxTriangleRight } from "react-icons/rx";
 import { CategoryDataType } from '../../types/Types';
 
 import { ListSummary } from './ListSummary';
-import { LineChartSummary } from "./LineChartSummary";
 import { PieChartSummary } from "./PieChartSummary";
 
 
