@@ -16,7 +16,7 @@ export const Transfer = (): JSX.Element => {
                     <p className="py-3">송금하기</p>
                 </div>
 
-                <div className="card w-96 bg-accent shadow-xl">
+                <div className="card w-full bg-accent shadow-xl">
                     <div className="m-3 rounded-xl bg-base-100 p-2 text-left">
                         <Link to="/home/banking" className="link-primary underline">이전으로</Link>
                         <div className="user-account px-4 pt-4 text-sm font-bold">

@@ -18,7 +18,7 @@ const fetchAccountHistory = async (): Promise<AccountHistoryItem[]> => {
 };
 
 export const TransferList = (): JSX.Element => {
-    const { data: transferData, isLoading, isError } = useQuery('accountHistory', fetchAccountHistory, {
+    const { data: transferData, isLoading } = useQuery('accountHistory', fetchAccountHistory, {
         initialData: []
     });
     const [page, setPage] = useState<number>(1)
@@ -49,9 +49,6 @@ export const TransferList = (): JSX.Element => {
         return <div className="bg-base-100 rounded-xl py-20 mb-3 mx-3">Loading...</div>;
     }
 
-    if (isError) {
-        return <div className="bg-base-100 rounded-xl py-20 mb-3 mx-3">데이터를 불러오는데 에러가 발생했습니다. <b />잠시 후 다시 시도해주세요.</div>;
-    }
 
     return (
         <div className="flex flex-col gap-3 mb-3 mx-3 rounded-xl bg-base-100 p-3">
@@ -60,17 +57,20 @@ export const TransferList = (): JSX.Element => {
                     <table className="table  text-black">
                         <tbody>
                             {currentPost?.map((item: AccountHistoryItem, index) => (
-                                <tr key={String(index) + item.timestamp} className="flex gap-1 justify-between">
-                                    <td className="flex flex-col w-min-[73px]">
+                                <tr key={String(index) + item.timestamp} className="flex gap-1 justify-start">
+                                    <td className="flex flex-col w-28">
 
                                         <span className="pt-3" >{item.detail}</span>
                                         <span className="text-sm opacity-50">{TimeFormatter(item.timestamp)}</span>
                                     </td>
-                                    <td className="flex flex-col gap-1">
-                                        <span className="badge badge-ghost badge-sm p-2">{item.category}</span>
-                                        <span className="text-sm opacity-50 p-2">{item.memo}</span>
+                                    <td className="w-full flex justify-between">
+
+                                        <td className="flex flex-col gap-1">
+                                            <span className="badge badge-ghost badge-sm p-2">{item.category}</span>
+                                            <span className="text-sm opacity-50 p-2">{item.memo}</span>
+                                        </td>
+                                        <td className="text-xl flex items-center">{NumberFormat(item.amount)}</td>
                                     </td>
-                                    <td className="text-xl flex items-center">{NumberFormat(item.amount)}</td>
                                 </tr>
                             ))}
 

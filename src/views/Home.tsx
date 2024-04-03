@@ -23,7 +23,7 @@ export const Home = (): JSX.Element => {
 
     return (
         <div className="container min-h-screen">
-            <div className={`grid ${isRegister ? "grid-cols-2" : null} gap-8`}>
+            <div className={`grid ${isRegister ? "md:grid-cols-2" : null} gap-8 grid-cols-1`}>
                 {!uid ? (
                     <>
                         <div className="py-32">
@@ -40,8 +40,8 @@ export const Home = (): JSX.Element => {
                     </div>) :
                     (
                         <>
-                            <Summary />
                             <Outlet />
+                            <Summary />
                         </>
                     )}
             </div>

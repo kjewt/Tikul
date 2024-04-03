@@ -46,10 +46,11 @@ export const Banking = (): JSX.Element => {
                 {isCopied && <Alert content="복사가 완료되었습니다!" />}
                 <div className="card w-full mb-10 bg-accent shadow-xl">
                     <div className="m-3 rounded-xl bg-base-100">
-                        <button className="user-account p-4 text-sm badge badge-secondary m-4 cursor-pointer" onClick={copyToClipboard}>
-                            <span>{freshAccountData.name}님의 계좌 |</span>
-                            <span className="p-1">{freshAccountData.bank}</span>
-                            <span className="p-1">{freshAccountData.account}</span>
+                        <button className="user-account p-7 sm:p-4 text-sm badge badge-secondary m-4 cursor-pointer" onClick={copyToClipboard}>
+                            <div className="flex flex-col sm:flex-row">
+                                <span className="p-1">{freshAccountData.bank}</span>
+                                <span className="p-1">{freshAccountData.account}</span>
+                            </div>
                         </button>
                         <div className="account-balance px-4 text-right text-xl">{NumberFormat(freshAccountData.balance)}원</div>
                         <div className="btn-banking p-4">

@@ -60,7 +60,7 @@ export const TransferInfo = (): JSX.Element => {
     return (<>
         <form onSubmit={handleSubmit}>
             <div className="flex items-center justify-center">
-                <div className="w-[330px] mb-16">
+                <div className="w-[350px] mb-16">
                     <Account onValueChange={handleAccount} />
                     <Bank onValueChange={handleBank} />
                     <Money onValueChange={handleMoney} />
