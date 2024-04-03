@@ -53,11 +53,11 @@ export const Money = ({ onValueChange }: ValueProps): JSX.Element => {
                     <span className="flex items-end">원</span>
                 </div>
                 <span className={`pt-2 pl-1 text-sm text-red-500 ${!isValid ? "" : "hidden"}`}>잔액을 확인해주세요!</span>
-                <div className="flex gap-2 py-2">
-                    <button className="btn btn-sm" onClick={() => handleMoneyAdd(10000)}>+1만</button>
-                    <button className="btn btn-sm" onClick={() => handleMoneyAdd(100000)}>+10만</button>
-                    <button className="btn btn-sm" onClick={() => handleMoneyAdd(1000000)}>+100만</button>
-                    <button className="btn btn-sm" onClick={handleMaxAmount}>전액</button>
+                <div className="py-2">
+                    <button className="btn btn-sm m-1" onClick={() => handleMoneyAdd(10000)}>+1만</button>
+                    <button className="btn btn-sm m-1" onClick={() => handleMoneyAdd(100000)}>+10만</button>
+                    <button className="btn btn-sm m-1" onClick={() => handleMoneyAdd(1000000)}>+100만</button>
+                    <button className="btn btn-sm m-1" onClick={handleMaxAmount}>전액</button>
                 </div>
             </div>
         </>

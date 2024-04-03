@@ -46,12 +46,9 @@ export const Summary = (): JSX.Element => {
                             </div>
                             {isList ?
                                 <ListSummary summaryData={summaryData} /> :
-                                (<div className="flex flex-col gap-10">
-                                    <PieChartSummary summaryData={summaryData} />
-                                    <LineChartSummary summaryData={summaryData} />
+                                <PieChartSummary summaryData={summaryData} />
 
-                                </div>)}
-
+                            }
                         </div>
                     </div>
                 </div>

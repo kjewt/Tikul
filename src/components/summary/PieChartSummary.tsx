@@ -24,7 +24,7 @@ export const options = {
         },
         title: {
             display: true,
-            text: 'Chart.js Bar Chart',
+            text: '이번달 소비 비율',
         },
     },
 };
@@ -69,8 +69,10 @@ export const PieChartSummary = ({ summaryData }: ListSummaryProps): JSX.Element 
 
 
 
-    return (<div>
-        <Pie data={data} className="py-2" />
-    </div>)
+    return (
+        <div>
+            <span className="text-sm opacity-50">카테고리별 비율</span>
+            <Pie data={data} className="py-2" />
+        </div>)
 
 }

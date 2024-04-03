@@ -54,22 +54,22 @@ export const TransferList = (): JSX.Element => {
         <div className="flex flex-col gap-3 mb-3 mx-3 rounded-xl bg-base-100 p-3">
             <div className="flex flex-col bg-base-100 rounded-xl text-base-100">
                 <div className="overflow-x-auto">
-                    <table className="table  text-black">
+                    <table className="table text-black">
                         <tbody>
                             {currentPost?.map((item: AccountHistoryItem, index) => (
                                 <tr key={String(index) + item.timestamp} className="flex gap-1 justify-start">
-                                    <td className="flex flex-col w-28">
+                                    <td className="flex flex-col w-[120px] pr-0">
 
                                         <span className="pt-3" >{item.detail}</span>
                                         <span className="text-sm opacity-50">{TimeFormatter(item.timestamp)}</span>
                                     </td>
-                                    <td className="w-full flex justify-between">
+                                    <td className="w-full flex justify-between pl-0">
 
-                                        <td className="flex flex-col gap-1">
-                                            <span className="badge badge-ghost badge-sm p-2">{item.category}</span>
-                                            <span className="text-sm opacity-50 p-2">{item.memo}</span>
+                                        <td className="flex flex-col gap-1 px-0 sm:px-3">
+                                            <span className="badge badge-ghost badge-sm p-2 py-3">{item.category}</span>
+                                            <span className="text-sm opacity-50 ">{item.memo}</span>
                                         </td>
-                                        <td className="text-xl flex items-center">{NumberFormat(item.amount)}</td>
+                                        <td className="text-xl flex items-center pl-0">{NumberFormat(item.amount)}</td>
                                     </td>
                                 </tr>
                             ))}
