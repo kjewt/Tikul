@@ -24,17 +24,17 @@ export const NavBar = () => {
             navigate('/login');
         }
     }, []);
-    useEffect(() => {
-        const clearLocalStorage = () => {
-            localStorage.clear();
-        };
+    // useEffect(() => {
+    //     const clearLocalStorage = () => {
+    //         localStorage.clear();
+    //     };
 
-        window.addEventListener('beforeunload', clearLocalStorage);
+    //     window.addEventListener('beforeunload', clearLocalStorage);
 
-        return () => {
-            window.removeEventListener('beforeunload', clearLocalStorage);
-        };
-    }, []);
+    //     return () => {
+    //         window.removeEventListener('beforeunload', clearLocalStorage);
+    //     };
+    // }, []);
 
     if (!storedAccountData) return null
 

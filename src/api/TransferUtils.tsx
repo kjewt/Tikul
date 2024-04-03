@@ -18,7 +18,7 @@ export const Api_transferMutation = () => {
                 // 입력한 은행 이름과 계좌번호와 일치하는 유저가 있는지 확인
                 if (!querySnapshot.empty) {
                     if (!storedUid) {
-                        alert('계좌 정보를 확인해주세요.');
+                        alert('로그인이 되어있지 않습니다.');
                         return;
                     }
 

@@ -1,4 +1,4 @@
-import { Routes, Navigate, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from '../views/Login';
 import Join from '../views/Join';
 import { Home } from '../views/Home'
@@ -23,7 +23,7 @@ export const RouteList = () => {
             <Route path="/setting" element={<Setting />} />
             <Route path="/detail" element={<TransactionDetail />} />
             <Route path="/not-a-user" element={<NotAUser />} />
-            <Route path="/*" element={<Navigate to="/" />} />
+            <Route path="/*" element={<Home />} />
         </Routes>
     )
 }
