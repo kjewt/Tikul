@@ -3,7 +3,7 @@ import { db } from "../../firebase";
 import { useMutation } from "react-query";
 import { AccountSendHistoryItem, TransferDataType } from "../types/Types";
 
-const storedUid = localStorage.getItem('uid');
+
 
 // 송금
 export const Api_transferMutation = () => {
@@ -11,6 +11,7 @@ export const Api_transferMutation = () => {
         async ({ transferInfoProps, navigate }: { transferInfoProps: TransferDataType, navigate: any }) => {
             try {
                 // 입력된 은행 이름과 계좌번호로 유저 검색
+                const storedUid = localStorage.getItem('uid');
                 const usersRef = collection(db, 'users');
                 const q = query(usersRef, where('bank', '==', transferInfoProps.bank), where('account', '==', transferInfoProps.account));
                 const querySnapshot = await getDocs(q);
