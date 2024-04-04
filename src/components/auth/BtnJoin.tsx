@@ -42,7 +42,8 @@ export const BtnJoin = ({ email, password, cbx }: { email: ChildrenValue, passwo
                 <button
                     className="btn btn-primary"
                     disabled={!isValid}
-                    onClick={SignUp}>
+                    onClick={SignUp}
+                    aria-label="가입하기" >
                     회원가입하기
 
                 </button>

@@ -39,7 +39,7 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
         <>
             <div className="form-control mt-6">
                 <div>
-                    <button className="btn btn-primary w-full" onClick={handleLogin}>
+                    <button className="btn btn-primary w-full" onClick={handleLogin} aria-label="로그인">
                         {loginMutation.isLoading ? (<span className="loading loading-spinner"></span>) : 'Login'}
                     </button>
                     {loginMutation.isError && (
@@ -49,7 +49,7 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
                                 <p className="py-4">이메일이나 비밀번호가 일치하지 않습니다.</p>
                                 <div className="modal-action">
                                     <form method="dialog">
-                                        <button className="btn">
+                                        <button className="btn" aria-label="닫기">
                                             닫기
                                         </button>
                                     </form>

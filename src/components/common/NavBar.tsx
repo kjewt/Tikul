@@ -24,17 +24,7 @@ export const NavBar = () => {
             navigate('/login');
         }
     }, []);
-    // useEffect(() => {
-    //     const clearLocalStorage = () => {
-    //         localStorage.clear();
-    //     };
 
-    //     window.addEventListener('beforeunload', clearLocalStorage);
-
-    //     return () => {
-    //         window.removeEventListener('beforeunload', clearLocalStorage);
-    //     };
-    // }, []);
 
     if (!storedAccountData) return null
 
@@ -48,7 +38,7 @@ export const NavBar = () => {
             <div className="navbar bg-base-100 shadow-md hover:bg-transparent">
                 <div className="flex-1">
                     <Link to={`${storedUid ? "/home/banking" : "/login"}`}>
-                        <button className="btn btn-ghost normal-case text-xl hover:bg-transparent">TIKUL</button>
+                        <button className="btn btn-ghost normal-case text-xl hover:bg-transparent" aria-label="home">TIKUL</button>
                     </Link>
                 </div>
                 {storedUid && <div className="flex-none">
@@ -56,7 +46,7 @@ export const NavBar = () => {
                         {(userAccountData?.name) ? userAccountData.name : userAccountData?.email}
                     </div>
                     <div className="dropdown dropdown-bottom dropdown-end">
-                        <button tabIndex={0} className="btn btn-ghost hover:bg-transparent"><FaUserCircle className="text-2xl" /></button>
+                        <button tabIndex={0} className="btn btn-ghost hover:bg-transparent" aria-label="유저 정보"><FaUserCircle className="text-2xl" /></button>
                         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                             <ul>
                                 <li><Link to="/setting">설정</Link></li>

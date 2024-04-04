@@ -28,13 +28,13 @@ export const BtnEditCategory = ({ category }: BtnEditCategoryType) => {
 
     return (
         <form onSubmit={(e) => e.preventDefault()} >
-            <button onClick={handleModalOpen} >
+            <button onClick={handleModalOpen} aria-label="카테고리 수정 버튼">
                 <FaEdit className="text-xl text-primary mt-1" />
             </button>
             {isOpen && (
                 <div className="flex gap-1" onMouseLeave={handleModalClose}>
                     <input value={newCategory} type="text" placeholder="카테고리" className="input input-bordered input-sm w-24 max-w-xs" onChange={handleInputValue} />
-                    <button className="btn btn-sm" onClick={() => Api_EditCategory(category, newCategory)}>등록</button>
+                    <button className="btn btn-sm" onClick={() => Api_EditCategory(category, newCategory)} aria-label="카테고리수정">등록</button>
                 </div>
             )}
         </form>

@@ -65,11 +65,11 @@ export const TransferList = (): JSX.Element => {
                                     </td>
                                     <td className="w-full flex justify-between pl-0">
 
-                                        <td className="flex flex-col gap-1 px-0 sm:px-3">
+                                        <div className="flex flex-col gap-1 px-0 sm:px-3">
                                             <span className="badge badge-ghost badge-sm p-2 py-3">{item.category}</span>
                                             <span className="text-sm opacity-50 ">{item.memo}</span>
-                                        </td>
-                                        <td className="text-xl flex items-center pl-0">{NumberFormat(item.amount)}</td>
+                                        </div>
+                                        <div className="text-xl flex items-center pl-0">{NumberFormat(item.amount)}</div>
                                     </td>
                                 </tr>
                             ))}

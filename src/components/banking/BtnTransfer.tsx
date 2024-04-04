@@ -14,7 +14,10 @@ export const BtnTransfer = ({ transferInfoProps }: { transferInfoProps: Transfer
     return (
         <div>
             <div className="flex flex-col gap-2 mt-4">
-                <button onClick={handleTransferClick} className={`btn ${transferInfoProps.valid ? "btn-primary" : "btn-disabled"} w-full text-base-100`}>
+                <button
+                    onClick={handleTransferClick}
+                    className={`btn ${transferInfoProps.valid ? "btn-primary" : "btn-disabled"} w-full text-base-100`}
+                    aria-label="송금" >
                     {(!isLoading) ? "송금" : (<span className="loading loading-spinner"></span>)}
                 </button>
                 <Link to="/home/banking">
