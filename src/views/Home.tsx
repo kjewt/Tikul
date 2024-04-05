@@ -20,11 +20,10 @@ export const Home = (): JSX.Element => {
     const isRegister = freshAccountData?.IsRegister
     const uid = localStorage.getItem('uid')
 
-
     return (
         <div className="container min-h-screen">
             <div className={`grid ${isRegister ? "md:grid-cols-2" : null} gap-8 grid-cols-1`}>
-                {!uid ? (
+                {!uid && !isRegister ? (
                     <>
                         <div className="py-32">
                             계좌를 먼저

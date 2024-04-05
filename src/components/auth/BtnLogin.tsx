@@ -3,16 +3,11 @@ import { firebaseAuth, db } from '../../../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { useMutation } from 'react-query';
-// import { accountDataState, uidDataState } from '../../state/atoms';
-// import { useRecoilState } from 'recoil'
-// import { AccountDataType } from '../../types/Types';
 
 type PropsType = { email: string, password: string }
 
 export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
     const navigate = useNavigate();
-    // const [accountData, setAccountData] = useRecoilState(accountDataState);
-    // const [uidData, setUidData] = useRecoilState(uidDataState);
 
     const loginMutation = useMutation(async () => {
         const userAuth = await signInWithEmailAndPassword(firebaseAuth, email, password);
@@ -35,6 +30,8 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
         loginMutation.mutate();
     };
 
+
+
     return (
         <>
             <div className="form-control mt-6">
@@ -43,7 +40,7 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
                         {loginMutation.isLoading ? (<span className="loading loading-spinner"></span>) : 'Login'}
                     </button>
                     {loginMutation.isError && (
-                        <dialog id="my_modal_1" className="modal">
+                        <div className="modal">
                             <div className="modal-box">
                                 <h3 className="font-bold text-lg text-primary">로그인 실패</h3>
                                 <p className="py-4">이메일이나 비밀번호가 일치하지 않습니다.</p>
@@ -55,7 +52,7 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
                                     </form>
                                 </div>
                             </div>
-                        </dialog>
+                        </div>
                     )}
                 </div>
                 <label className="label justify-center mt-2">
