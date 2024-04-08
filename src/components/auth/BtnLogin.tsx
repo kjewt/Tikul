@@ -24,13 +24,15 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
                 console.log("Document data: 문서가 없습니다.");
             }
         }
+    }, {
+        onError: () => {
+            alert("비밀번호나 이메일이 일치하지 않습니다.")
+        }
     });
 
     const handleLogin = () => {
         loginMutation.mutate();
     };
-
-
 
     return (
         <>
@@ -39,21 +41,6 @@ export const BtnLogin = ({ email, password }: PropsType): JSX.Element => {
                     <button className="btn btn-primary w-full" onClick={handleLogin} aria-label="로그인">
                         {loginMutation.isLoading ? (<span className="loading loading-spinner"></span>) : 'Login'}
                     </button>
-                    {loginMutation.isError && (
-                        <div className="modal">
-                            <div className="modal-box">
-                                <h3 className="font-bold text-lg text-primary">로그인 실패</h3>
-                                <p className="py-4">이메일이나 비밀번호가 일치하지 않습니다.</p>
-                                <div className="modal-action">
-                                    <form method="dialog">
-                                        <button className="btn" aria-label="닫기">
-                                            닫기
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    )}
                 </div>
                 <label className="label justify-center mt-2">
                     <span className="text-sm mr-2">아직 회원이 아니라면 지금 바로</span>
